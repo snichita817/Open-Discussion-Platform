@@ -1,0 +1,37 @@
+﻿@model ForumApp.Models.Section
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Sections/Index/">Sections</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.SectionName</li>
+    </ol>
+</nav>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">@Model.SectionName</h4>
+        <a class="btn btn-outline-success" href="/Sections/Edit/@Model.Id">Edit section</a> @*trebuie mutat asta*@
+        
+        <form method="post" action="/Sections/Delete/@Model.Id">
+            <button class="btn btn-danger" type="submit">Delete section</button>
+        </form>
+    </div>
+</div>
+<br />
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Forums</h5>
+        @foreach (var forum in Model.Forums)
+        {
+            <div class="card" style="width: 35rem;">
+                <div class="card-body">
+                    <h5 class="card-title">@forum.ForumName</h5>
+                    <p class="card-text" style="color:grey">@forum.ForumDescription</p>
+                    <small>@forum.CountOfSubforums postari</small>
+                    <small>@forum.MsgCount mesaje</small>
+                </div>
+            </div>
+        }
+    </div>
+</div>

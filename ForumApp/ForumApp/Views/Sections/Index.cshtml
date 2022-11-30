@@ -1,0 +1,34 @@
+﻿@model Enum
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Sections</li>
+    </ol>
+</nav>
+
+<h2>Forums</h2>
+<a class="btn btn-outline-success" href="/Sections/New/">Add new section</a> @*trebuie mutat asta*@
+<br />
+<br />
+@foreach (var sect in ViewBag.Sections)
+{
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title"><a style="text-decoration:none; color:black" href="/Sections/Show/@sect.Id">@sect.SectionName</a></h3>
+
+            @foreach(var forum in sect.Forums)
+            {
+                <div class="card" style="width: 35rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@forum.ForumName</h5>
+                        <p class="card-text" style="color:grey">@forum.ForumDescription</p>
+                        <small>@forum.CountOfSubforums postari</small>
+                        <small>@forum.MsgCount mesaje</small>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+    <br />
+}

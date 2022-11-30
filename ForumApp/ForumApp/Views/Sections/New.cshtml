@@ -1,0 +1,41 @@
+﻿@model ForumApp.Models.Section
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Sections/Index/">Sections</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Create Section</li>
+    </ol>
+</nav>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Add new section</h4>
+    </div>
+</div>
+<br />
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-6 offset-3">
+            @using (Html.BeginForm(method: FormMethod.Post, actionName: "New", controllerName:"Sections"))
+            {
+                @Html.Label("SectionName", "Name of the section")
+                <br />
+                @Html.TextBox("SectionName", null, new { @class = "form-control" })
+                @Html.ValidationMessage("SectionName", null, new { @class = "text-danger" })
+                <br /><br />
+
+                <label>Select access level</label>
+                @Html.DropDownListFor(m => m.SectionType,
+                            new SelectList(Model.Sect, "Value", "Text"), "Select access level",
+                            new { @class = "form-control" })
+                //@Html.ValidationMessage("SectionType", null, new { @class = "text-danger" })
+                <br />
+
+                <button class="btn btn-success" type="submit">Add new section</button>
+            }
+        </div>
+    </div>
+</div>
