@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\snich\\source\\repos\\Proiect-.NET-Sem-1-An-2-\\ForumApp\\ForumApp\\ForumApp.csproj": {}
+    "C:\\Users\\alexa\\OneDrive - unibuc.ro\\Documents\\UniBuc Files (notes and hw)\\Anul 2\\Sem 1\\ASP.NET\\Proiect\\Proiect-.NET-Sem-1-An-2-\\ForumApp\\ForumApp\\ForumApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\snich\\source\\repos\\Proiect-.NET-Sem-1-An-2-\\ForumApp\\ForumApp\\ForumApp.csproj": {
+    "C:\\Users\\alexa\\OneDrive - unibuc.ro\\Documents\\UniBuc Files (notes and hw)\\Anul 2\\Sem 1\\ASP.NET\\Proiect\\Proiect-.NET-Sem-1-An-2-\\ForumApp\\ForumApp\\ForumApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\snich\\source\\repos\\Proiect-.NET-Sem-1-An-2-\\ForumApp\\ForumApp\\ForumApp.csproj",
+        "projectUniqueName": "C:\\Users\\alexa\\OneDrive - unibuc.ro\\Documents\\UniBuc Files (notes and hw)\\Anul 2\\Sem 1\\ASP.NET\\Proiect\\Proiect-.NET-Sem-1-An-2-\\ForumApp\\ForumApp\\ForumApp.csproj",
         "projectName": "ForumApp",
-        "projectPath": "C:\\Users\\snich\\source\\repos\\Proiect-.NET-Sem-1-An-2-\\ForumApp\\ForumApp\\ForumApp.csproj",
-        "packagesPath": "C:\\Users\\snich\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\snich\\source\\repos\\Proiect-.NET-Sem-1-An-2-\\ForumApp\\ForumApp\\obj\\",
+        "projectPath": "C:\\Users\\alexa\\OneDrive - unibuc.ro\\Documents\\UniBuc Files (notes and hw)\\Anul 2\\Sem 1\\ASP.NET\\Proiect\\Proiect-.NET-Sem-1-An-2-\\ForumApp\\ForumApp\\ForumApp.csproj",
+        "packagesPath": "C:\\Users\\alexa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\alexa\\OneDrive - unibuc.ro\\Documents\\UniBuc Files (notes and hw)\\Anul 2\\Sem 1\\ASP.NET\\Proiect\\Proiect-.NET-Sem-1-An-2-\\ForumApp\\ForumApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\snich\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\alexa\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -85,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
