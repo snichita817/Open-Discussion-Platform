@@ -5,7 +5,7 @@ namespace ForumApp.Models
     public class Section
     {
         [Key]
-        public int SectionId { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Numele sectiunii este obligatoriu!")]
         public string SectionName { get; set; }
