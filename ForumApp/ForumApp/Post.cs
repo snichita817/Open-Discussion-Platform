@@ -24,7 +24,7 @@ namespace ForumApp
         public DateTime PostDate { get; set; }
 
         [Required(ErrorMessage = "Userul care a creat postarea trebuie sa fie specificat!")]
-        public string Sender { get; set; }
+        public int UserId { get; set; }
         
         
 
