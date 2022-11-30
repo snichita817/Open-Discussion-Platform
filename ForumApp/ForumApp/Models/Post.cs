@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ForumApp
+namespace ForumApp.Models
 {
     public class Post
     {
@@ -25,8 +25,8 @@ namespace ForumApp
 
         [Required(ErrorMessage = "Userul care a creat postarea trebuie sa fie specificat!")]
         public int UserId { get; set; }
-        
-        
+
+
 
 
     }

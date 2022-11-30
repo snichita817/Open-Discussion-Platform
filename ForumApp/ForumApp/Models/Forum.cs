@@ -19,5 +19,7 @@ namespace ForumApp.Models
         [MinLength(5, ErrorMessage = "Lungimea minima trebuie sa fie de 5 caractere")]
         [StringLength(100, ErrorMessage = "Lungimea maxima trebuie sa fie de 100 de caractere")]
         public string ForumDescription { get; set; }
+
+        public virtual ICollection<Subforum> Subforums { get; set; }
     }
 }
