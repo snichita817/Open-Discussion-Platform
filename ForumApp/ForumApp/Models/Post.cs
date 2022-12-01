@@ -5,7 +5,7 @@ namespace ForumApp.Models
     public class Post
     {
         [Key]
-        public int PostId { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Titlul este obligatoriu!")]
         [MinLength(5, ErrorMessage = "Lungimea minima trebuie sa fie de 5 caractere")]

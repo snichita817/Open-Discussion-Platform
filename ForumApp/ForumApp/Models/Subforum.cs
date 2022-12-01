@@ -5,10 +5,10 @@ namespace ForumApp.Models
     public class Subforum
     {
         [Key]
-        public int SubforumId { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Subforumul trebuie sa apartina de un forum!")]
-        public string ForumId { get; set; }
+        public int ForumId { get; set; }
 
         [Required(ErrorMessage = "Tipul subforumului este obligatoriu!")]
         public string SubforumType { get; set; }
