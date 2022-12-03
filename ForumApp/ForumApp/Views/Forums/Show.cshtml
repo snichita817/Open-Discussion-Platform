@@ -1,5 +1,14 @@
 ﻿@model ForumApp.Models.Forum
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Sections/Index/">Sections</a></li>
+        <li class="breadcrumb-item"><a href="/Sections/Show/@Model.SectionId">@Model.Section.SectionName</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.ForumName</li>
+    </ol>
+</nav>
+
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">@Model.ForumName</h5>
