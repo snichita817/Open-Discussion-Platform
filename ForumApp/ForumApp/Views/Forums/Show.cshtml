@@ -1,0 +1,37 @@
+﻿@model ForumApp.Models.Forum
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Sections/Index/">Sections</a></li>
+        <li class="breadcrumb-item"><a href="/Sections/Show/@Model.SectionId">@Model.Section.SectionName</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.ForumName</li>
+    </ol>
+</nav>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">@Model.ForumName</h5>
+        <p class="card-text">@Model.ForumDescription</p>
+        <a class="btn btn-outline-success" href="/Forums/Edit/@Model.Id">Edit forum details</a>
+        <form method="post" action="/Forums/Delete/@Model.Id">
+            <button class="btn btn-danger" type="submit">Delete forum</button>
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+    @foreach(var subf in Model.Subforums)
+    {
+        <div class="card" style="width: 35rem;">
+            <div class="card-body">
+                <h5 class="card-title">@subf.SubforumName</h5>
+                <p>@subf.MsgCount replies</p>
+                <small style="color:gray">@subf.ViewCount views</small><br/>
+                <small style="color:gray">Created on @subf.CreationDate</small>
+            </div>
+        </div>
+    }
+    </div>
+</div>

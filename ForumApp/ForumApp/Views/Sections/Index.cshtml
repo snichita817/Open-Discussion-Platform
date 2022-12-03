@@ -8,6 +8,7 @@
 
 <h2>Forums</h2>
 <a class="btn btn-outline-success" href="/Sections/New/">Add new section</a> @*trebuie mutat asta*@
+<a class="btn btn-outline-success" href="/Forums/New/">Add new forum</a>
 <br />
 <br />
 @foreach (var sect in ViewBag.Sections)
@@ -20,7 +21,7 @@
             {
                 <div class="card" style="width: 35rem;">
                     <div class="card-body">
-                        <h5 class="card-title">@forum.ForumName</h5>
+                        <h5 class="card-title"><a style="text-decoration:none; color:black" href="/Forums/Show/@forum.Id">@forum.ForumName</h5>
                         <p class="card-text" style="color:grey">@forum.ForumDescription</p>
                         <small>@forum.CountOfSubforums postari</small>
                         <small>@forum.MsgCount mesaje</small>

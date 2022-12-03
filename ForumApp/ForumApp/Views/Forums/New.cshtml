@@ -1,0 +1,47 @@
+﻿@model ForumApp.Models.Forum
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Sections/Index/">Sections</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Create Forum</li>
+    </ol>
+</nav>
+
+<h2 class="text-center mt-5">Add new forum</h2>
+<br />
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-6 offset-3">
+            @using (Html.BeginForm(method: FormMethod.Post, actionName: "New", controllerName:"Forums"))
+            {
+                @Html.Label("ForumName", "Forum name");
+                <br />
+                @Html.TextBox("ForumName", null, new { @class = "form-control" })
+                @Html.ValidationMessage("ForumName", null, new {@class = "text-danger"})
+                <br /><br />
+
+                @Html.Label("ForumDescription", "Enter a description for your forum")
+                <br />
+                @Html.TextBox("ForumDescription", null, new { @class = "form-control" })
+                @Html.ValidationMessage("ForumDescription", null, new {@class = "text-danger"})
+                <br /><br />
+
+                <label>Select section</label>
+                @Html.DropDownListFor(m => m.SectionId, new SelectList(Model.Sect, "Value", "Text"),
+                    "Select section", new { @class = "form-control" })
+                @Html.ValidationMessage("Section", null, new {@class = "text-danger"})
+                <br />
+
+                <label>Select access level</label>
+                @Html.DropDownListFor(m => m.ForumType,
+                    new SelectList(Model.ForumAccess, "Value", "Text"), "Select access level",
+                    new { @class = "form-control" })
+                //@Html.ValidationMessage("SectionType", null, new { @class = "text-danger" })
+                <br />
+                <button class="btn btn-sm btn-success" type="submit">Add new forum!</button>
+            }
+        </div>
+    </div>
+</div>
