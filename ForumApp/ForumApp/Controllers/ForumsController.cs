@@ -17,8 +17,13 @@ namespace ForumApp.Controllers
         
         public IActionResult Show(int id)
         {
+            /*
+             * Titlu forum
+             * - Subforum 1
+             * - Subforum 2
+             */
             Forum forum = db.Forums.Include("Section").Include("Subforums")
-                            .Where(foru => foru.Id == id)
+                            .Where(subforu => subforu.Id == id)
                             .First();
             return View(forum);
         }

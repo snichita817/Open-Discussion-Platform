@@ -11,7 +11,7 @@ namespace ForumApp.Models
         public int ForumId { get; set; }
 
         [Required(ErrorMessage = "Tipul subforumului este obligatoriu!")]
-        public string SubforumType { get; set; }
+        public int SubforumType { get; set; }
 
         [Required(ErrorMessage = "Numele subforumului este obligatoriu!")]
         [MinLength(5, ErrorMessage = "Lungimea minima trebuie sa fie de 5 caractere")]
