@@ -13,6 +13,8 @@
         <h4 class="card-title">@Model.SectionName</h4>
         <a class="btn btn-outline-success" href="/Sections/Edit/@Model.Id">Edit section</a> @*trebuie mutat asta*@
         
+        @* Buton pentru a adauga un forum nou in sectiunea in care ne aflam *@
+        <a class="btn btn-outline-success" href="/Forums/New/@Model.Id">Add new forum</a>
         <form method="post" action="/Sections/Delete/@Model.Id">
             <button class="btn btn-danger" type="submit">Delete section</button>
         </form>
