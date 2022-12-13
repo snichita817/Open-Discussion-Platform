@@ -26,9 +26,9 @@ namespace ForumApp.Models
         
         // [Required(ErrorMessage = "Precizarea userului care a creat subforumul este obligatorie!")]
 
-        public string? Creator { get; set; }
+/*        public string? Creator { get; set; }
 
-        public string? LastPostUsr { get; set; }
+        public string? LastPostUsr { get; set; }*/
 
         public string? SubforumDesc { get; set; }
 
@@ -38,7 +38,7 @@ namespace ForumApp.Models
         public virtual Forum? Forum { get; set; }
         [ForeignKey("SectionId")]
         public virtual Section? Section { get; set; }
-
+        public string? UserId { get; set; }
         public virtual ICollection<Post>? Posts { get; set; }
 
         [NotMapped]

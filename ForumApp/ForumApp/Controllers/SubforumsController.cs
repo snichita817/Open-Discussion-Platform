@@ -65,8 +65,8 @@ namespace ForumApp.Controllers
             subforum.CreationDate = DateTime.Now;
             subforum.MsgCount = 0;
             subforum.ViewCount = 0;
-            subforum.Creator = "NULL"; //TODO: De adaugat userul curent
-            subforum.LastPostUsr = "NULL";
+/*            subforum.Creator = "NULL"; //TODO: De adaugat userul curent
+            subforum.LastPostUsr = "NULL";*/
             subforum.AccessLevel = GetAllCategories();
             subforum.Id = 0; // Fara asta da SqlException: Cannot insert explicit value for identity column in table 'Subforums' when IDENTITY_INSERT is set to OFF. Nu intelegem de ce
             subforum.SectionId = f.SectionId;

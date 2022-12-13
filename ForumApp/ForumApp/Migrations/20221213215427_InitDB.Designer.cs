@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ForumApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221213172318_initDB")]
-    partial class initDB
+    [Migration("20221213215427_InitDB")]
+    partial class InitDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -85,9 +85,6 @@ namespace ForumApp.Migrations
                     b.Property<int>("SubforumId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
@@ -132,14 +129,8 @@ namespace ForumApp.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Creator")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("ForumId")
                         .HasColumnType("int");
-
-                    b.Property<string>("LastPostUsr")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MsgCount")
                         .HasColumnType("int");
