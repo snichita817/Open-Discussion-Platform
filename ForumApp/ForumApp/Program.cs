@@ -1,4 +1,5 @@
 using ForumApp.Data;
+using ForumApp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,11 +11,22 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)     // face ca autentificarea sa lucreze, UI, cookies
+    .AddRoles<IdentityRole>()                                                                                      // adauga serviciul de management al rolurilor (!!INAINTE DE BAZA DE DATE)!!!)
+    .AddEntityFrameworkStores<ApplicationDbContext>();                                                             // realizeaza conexiunea cu baza de date, stringul de conexiune aflandu-se in appsetings.json
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+// CreateScope ofera acces la instanta curenta a aplicatiei
+// var scope are un service provider = folosit pentru a injecta dependente in bd
+// dependente -> bd, cookie, sesiune, autentificare
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    SeedData.Initialize(services);          // dupa pasul asta vedem baza de date populata
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

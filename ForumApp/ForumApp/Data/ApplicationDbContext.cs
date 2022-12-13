@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ForumApp.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>              // avem grija sa fie clasa userului pe care am creat-o
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

@@ -1,5 +1,7 @@
 ﻿using ForumApp.Data;
 using ForumApp.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -7,18 +9,30 @@ using Microsoft.VisualBasic;
 
 namespace ForumApp.Controllers
 {
+    [Authorize]
     public class SectionsController : Controller
     {
+        // vrem sa avem acces la baza de date, userManager, cel cu roluri si rolurile
         private readonly ApplicationDbContext db;
-        public SectionsController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public SectionsController(
+        ApplicationDbContext context,
+        UserManager<ApplicationUser> userManager,
+        RoleManager<IdentityRole> roleManager
+        )
         {
             db = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
+
 
         // afisam sectiunile, impreuna cu forumurile
         // avem:
         // sectiune 1 -> forum1, forum2...
         // sectiune n -> forum1, forum2...
+        [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult Index()
         {
             var sections = db.Sections.Include("Forums");

@@ -23,6 +23,14 @@ namespace ForumApp.Models
         [Required(ErrorMessage = "Data postarii trebuie sa fie specificata!")]
         public DateTime PostDate { get; set; }
         public string? UserId { get; set; }
+
+        // dc e nullable?
+        // practica buna, deoarece postarea nu o sa aibe proprietatea asta instant
+        // mai intai se adauga cheia externa userId si dupa aceea se populeaza aceasta propriete
+        // => va fi un interval cand e null
+        public virtual ApplicationUser? User { get; set; }           // postarea apartine unui singur utilizator
+
+
         // [Required(ErrorMessage = "Userul care a creat postarea trebuie sa fie specificat!")]
         // TODO: De pus userul obligatoriu de updatat automat
         /*        public int? UserId { get; set; }*/

@@ -1,24 +1,32 @@
 ﻿using ForumApp.Data;
 using ForumApp.Models;
-using Humanizer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
-using static System.Collections.Specialized.BitVector32;
-using Section = ForumApp.Models.Section;
 
 namespace ForumApp.Controllers
 {
+    [Authorize]
     public class ForumsController : Controller
     {
 
         private readonly ApplicationDbContext db;
-        public ForumsController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public ForumsController(
+        ApplicationDbContext context,
+        UserManager<ApplicationUser> userManager,
+        RoleManager<IdentityRole> roleManager
+        )
         {
             db = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
-        
+
+        [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult Show(int id)
         {
             /*
@@ -26,7 +34,8 @@ namespace ForumApp.Controllers
              * - Subforum 1
              * - Subforum 2
              */
-            Forum forum = db.Forums.Include("Section").Include("Subforums")
+            // includem user sa afisam cine a creat
+            Forum forum = db.Forums.Include("Section").Include("Subforums").Include("User")
                             .Where(foru => foru.Id == id)
                             .First();
             return View(forum);
