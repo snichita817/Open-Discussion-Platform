@@ -55,11 +55,8 @@ namespace ForumApp.Controllers
    
             forum.ForumAccess = GetAllCategories();
             forum.Sect = GetAllSections();
-<<<<<<< HEAD
-            
-=======
+
             forum.Id = 0;
->>>>>>> tindeche
             if (ModelState.IsValid)
             {
                 forum.Id = 0;                   // setam explicit valoarea Id-ului la 0, deoarece nsh dc din moment ce pasam Idul sectiunii se schimba ceva aici

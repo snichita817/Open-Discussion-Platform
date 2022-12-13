@@ -34,7 +34,9 @@ namespace ForumApp.Models
 
         [Required(ErrorMessage = "Data crearii subforumului este obligatorie!")]
         public DateTime CreationDate { get; set; }
+        [ForeignKey("ForumId")]
         public virtual Forum? Forum { get; set; }
+        [ForeignKey("SectionId")]
         public virtual Section? Section { get; set; }
 
         public virtual ICollection<Post>? Posts { get; set; }
