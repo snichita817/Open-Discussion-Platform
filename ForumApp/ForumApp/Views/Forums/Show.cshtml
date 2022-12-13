@@ -22,11 +22,12 @@
 
 <div class="card">
     <div class="card-body">
+    <a class="btn btn-secondary btn-sm" href="/Subforums/New/@Model.Id">Add Subforum</a>
     @foreach(var subf in Model.Subforums)
     {
         <div class="card" style="width: 35rem;">
             <div class="card-body">
-                <h5 class="card-title">@subf.SubforumName</h5>
+                    <h5 class="card-title"><a style="text-decoration:none; color:black" href="/Subforums/Show/@subf.Id">@subf.SubforumName</a></h5>
                 <p>@subf.MsgCount replies</p>
                 <small style="color:gray">@subf.ViewCount views</small><br/>
                 <small style="color:gray">Created on @subf.CreationDate</small>

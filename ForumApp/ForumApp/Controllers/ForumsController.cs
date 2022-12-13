@@ -27,7 +27,7 @@ namespace ForumApp.Controllers
              * - Subforum 2
              */
             Forum forum = db.Forums.Include("Section").Include("Subforums")
-                            .Where(subforu => subforu.Id == id)
+                            .Where(foru => foru.Id == id)
                             .First();
             return View(forum);
         }
@@ -55,7 +55,11 @@ namespace ForumApp.Controllers
    
             forum.ForumAccess = GetAllCategories();
             forum.Sect = GetAllSections();
+<<<<<<< HEAD
             
+=======
+            forum.Id = 0;
+>>>>>>> tindeche
             if (ModelState.IsValid)
             {
                 forum.Id = 0;                   // setam explicit valoarea Id-ului la 0, deoarece nsh dc din moment ce pasam Idul sectiunii se schimba ceva aici

@@ -23,8 +23,13 @@ namespace ForumApp.Models
         [Required(ErrorMessage = "Data postarii trebuie sa fie specificata!")]
         public DateTime PostDate { get; set; }
 
-        [Required(ErrorMessage = "Userul care a creat postarea trebuie sa fie specificat!")]
-        public int UserId { get; set; }
+        // [Required(ErrorMessage = "Userul care a creat postarea trebuie sa fie specificat!")]
+        // TODO: De pus userul obligatoriu de updatat automat
+        public int? UserId { get; set; }
+
+        // public virtual Subforum? Subforum { get; set; }
+
+        public string? UserName { get; set; }
 
 
 

@@ -1,0 +1,46 @@
+﻿@model ForumApp.Models.Subforum
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Sections/Index/">Sections</a></li>
+        <li class="breadcrumb-item"><a href="/Sections/Show/@Model.Forum.Id">@Model.Forum.ForumName</a></li>
+        <li class="breadcrumb-item"><a href="/Forums/Show/@Model.Section.Id">@Model.Section.SectionName</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.SubforumName</li>
+    </ol>
+</nav>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">@Model.SubforumName</h4>
+        <h5>@Model.SubforumDesc</h5>
+        <a class="btn btn-outline-success" href="/Subforums/Edit/@Model.Id">Edit Subforum</a>
+        
+        <form method="post" action="/Subforums/Delete/@Model.Id">
+            <button class="btn btn-danger" type="submit">Delete Subforum</button>
+        </form>
+    </div>
+</div>
+<br />
+
+
+<br />
+<br />
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Posts</h5>
+        <a class="btn btn-secondary btn-sm" href="/Posts/New/@Model.Id">Add Post</a>
+        @foreach (var pos in Model.Posts)
+        {
+            <div class="card" style="width: 35rem;">
+                <div class="card-body">
+                    <h5 class="card-title"><a style="text-decoration:none; color:black" href="/Posts/Show/@pos.Id">@pos.PostTitle</a></h5>
+                    <small>@pos.PostDate</small>
+                    <p class="card-text">@pos.PostContent</p>
+                    <small style="color:gray">Postat de: @pos.UserName</small>
+                </div>
+            </div>
+        }
+    </div>
+</div>

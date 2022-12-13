@@ -1,0 +1,41 @@
+﻿@model ForumApp.Models.Post
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Sections/Index/">Sections</a></li>
+        <li class="breadcrumb-item"><a href="/Sections/Show/@ViewBag.sectionId">@ViewBag.sectionName</a></li>
+        <li class="breadcrumb-item"><a href="/Forums/Show/@ViewBag.ForumId">@ViewBag.forumName</a></li>
+        <li class="breadcrumb-item"><a href="/Suborums/Show/@ViewBag.SubforumId">@ViewBag.SubforumName</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Create new Post</li>
+    </ol>
+</nav>
+
+<h2 class="container mt-5">Add new Post</h2>
+<br />
+<div class="container-mt5">
+    <div class="row">
+        <div class="col-6 offset-3">
+            @using (Html.BeginForm(method: FormMethod.Post, actionName: "New", controllerName: "Posts"))
+            {
+                @Html.Label("PostTitle", "Title of your post")
+                ;
+                <br />
+                @Html.TextBox("PostTitle", null, new { @class = "form-control" })
+                ;
+
+                @Html.ValidationMessage("PostTitle", null, new { @class = "text-danger" })
+                ;
+                <br />
+                @Html.Label("PostContent", "Write your post here")
+                ;
+                <br />
+                @Html.TextArea("PostContent", null, new { @class = "form-control" })
+                ;
+                <br />
+                <button class="btn btn-sm btn-success" type="submit">Add new Post!</button>
+            }
+        </div>
+    </div>
+
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })

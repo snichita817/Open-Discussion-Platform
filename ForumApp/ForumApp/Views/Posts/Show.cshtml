@@ -1,0 +1,28 @@
+﻿@model ForumApp.Models.Post
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Sections/Index/">Sections</a></li>
+        <li class="breadcrumb-item"><a href="/Sections/Show/@ViewBag.sectionId">@ViewBag.sectionName</a></li>
+        <li class="breadcrumb-item"><a href="/Forums/Show/@ViewBag.ForumId">@ViewBag.forumName</a></li>
+        <li class="breadcrumb-item"><a href="/Suborums/Show/@ViewBag.SubforumId">@ViewBag.SubforumName</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.PostTitle</li>
+    </ol>
+</nav>
+
+<div class="card">
+    <div class="card-body">
+        <a class="btn btn-outline-success" href="/Posts/Edit/@Model.Id">Edit post</a>
+        <form method="post" action="/Posts/Delete/@Model.Id">
+            <button class="btn btn-danger" type="submit">Delete post</button>
+        </form>
+        <div class="card" style="width: 35rem;">
+            <div class="card-body">
+                <h5 class="card-title">@Model.PostTitle</h5>
+                <small>@Model.PostDate</small>
+                <p class="card-text">@Model.PostContent</p>
+                <small style="color:gray">Postat de: @Model.UserName</small>
+            </div>
+    </div>
+</div>
