@@ -18,7 +18,7 @@ namespace ForumApp.Models
         public string PostContent { get; set; }
 
         [Required(ErrorMessage = "Id-ul subforumului trebuie sa fie specificat!")]
-        public int SubforumId { get; set; }
+        public int? SubforumId { get; set; }
 
         [Required(ErrorMessage = "Data postarii trebuie sa fie specificata!")]
         public DateTime PostDate { get; set; }

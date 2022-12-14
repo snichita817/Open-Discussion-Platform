@@ -9,9 +9,9 @@ namespace ForumApp.Models
         [Key]
         public int Id { get; set; }
 
-        public int ForumId { get; set; }
+        public int? ForumId { get; set; }
         [Required(ErrorMessage = "Subforumul trebuie sa apartina de o sectiune!")]
-        public int SectionId { get; set; }
+        public int? SectionId { get; set; }
 
         [Required(ErrorMessage = "Tipul subforumului este obligatoriu!")]
         public int SubforumType { get; set; }

@@ -102,7 +102,7 @@ namespace ForumApp.Controllers
                 forum.ForumName = requestForum.ForumName;
                 forum.ForumDescription = requestForum.ForumDescription;
                 forum.SectionId = requestForum.SectionId;
-                forum.ForumAccess = requestForum.ForumAccess;
+                forum.ForumType = requestForum.ForumType;
                 db.SaveChanges();
                 return Redirect("/Forums/Show/" + id);
             }

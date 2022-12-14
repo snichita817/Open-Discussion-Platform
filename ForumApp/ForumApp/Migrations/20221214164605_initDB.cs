@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ForumApp.Migrations
 {
-    public partial class InitDB : Migration
+    public partial class initDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -180,17 +180,23 @@ namespace ForumApp.Migrations
                     ForumType = table.Column<int>(type: "int", nullable: false),
                     CountOfSubforums = table.Column<int>(type: "int", nullable: false),
                     MsgCount = table.Column<int>(type: "int", nullable: false),
-                    ForumDescription = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    ForumDescription = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Forums", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Forums_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_Forums_Sections_SectionId",
                         column: x => x.SectionId,
                         principalTable: "Sections",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -199,24 +205,29 @@ namespace ForumApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ForumId = table.Column<int>(type: "int", nullable: false),
+                    ForumId = table.Column<int>(type: "int", nullable: true),
                     SectionId = table.Column<int>(type: "int", nullable: false),
                     SubforumType = table.Column<int>(type: "int", nullable: false),
                     SubforumName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     MsgCount = table.Column<int>(type: "int", nullable: false),
                     ViewCount = table.Column<int>(type: "int", nullable: false),
                     SubforumDesc = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Subforums", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Subforums_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_Subforums_Forums_ForumId",
                         column: x => x.ForumId,
                         principalTable: "Forums",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Subforums_Sections_SectionId",
                         column: x => x.SectionId,
@@ -235,11 +246,17 @@ namespace ForumApp.Migrations
                     PostContent = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: false),
                     SubforumId = table.Column<int>(type: "int", nullable: false),
                     PostDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Posts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Posts_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Posts_Subforums_SubforumId",
                         column: x => x.SubforumId,
@@ -293,9 +310,19 @@ namespace ForumApp.Migrations
                 column: "SectionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Forums_UserId",
+                table: "Forums",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Posts_SubforumId",
                 table: "Posts",
                 column: "SubforumId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Posts_UserId",
+                table: "Posts",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Subforums_ForumId",
@@ -306,6 +333,11 @@ namespace ForumApp.Migrations
                 name: "IX_Subforums_SectionId",
                 table: "Subforums",
                 column: "SectionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Subforums_UserId",
+                table: "Subforums",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -332,13 +364,13 @@ namespace ForumApp.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Subforums");
 
             migrationBuilder.DropTable(
                 name: "Forums");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Sections");
