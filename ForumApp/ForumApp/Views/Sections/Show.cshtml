@@ -31,7 +31,11 @@
         <a class="btn btn-secondary btn-sm" href="/Forums/New/@Model.Id">Add Forum</a>
         @foreach (ForumApp.Models.Forum forum in Model.Forums)
         {
-            <partial name="ForumInfo" model="forum"></partial>
+            @if(forum.ForumType == 0)                               // daca forumul este public
+            {
+                <partial name="ForumInfo" model="forum"></partial>
+            }
+            
         }
     </div>
 </div>

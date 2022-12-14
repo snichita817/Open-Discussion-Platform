@@ -13,16 +13,23 @@
 <br />
 @foreach (var sect in ViewBag.Sections)
 {
-    <div class="card">
-        <div class="card-body">
-            <h3 class="card-title"><a style="text-decoration:none; color:black" href="/Sections/Show/@sect.Id">@sect.SectionName</a></h3>
+    @if(sect.SectionType == 0)                            // daca sectiunea este public
+    {
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title"><a style="text-decoration:none; color:black" href="/Sections/Show/@sect.Id">@sect.SectionName</a></h3>
 
-            @foreach(ForumApp.Models.Forum forum in sect.Forums)
-            {
-                <partial name="ForumInfo" model="forum"></partial>
-            }
+                @foreach (ForumApp.Models.Forum forum in sect.Forums)
+                {
+                    @if(forum.ForumType == 0)             // daca forumul este public
+                    {
+                        <partial name="ForumInfo" model="forum"></partial>
+                    }
+                    
+                }
 
+            </div>
         </div>
-    </div>
-    <br />
+        <br />
+    }
 }
