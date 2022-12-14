@@ -17,16 +17,9 @@
         <div class="card-body">
             <h3 class="card-title"><a style="text-decoration:none; color:black" href="/Sections/Show/@sect.Id">@sect.SectionName</a></h3>
 
-            @foreach(var forum in sect.Forums)
+            @foreach(ForumApp.Models.Forum forum in sect.Forums)
             {
-                <div class="card" style="width: 35rem;">
-                    <div class="card-body">
-                        <h5 class="card-title"><a style="text-decoration:none; color:black" href="/Forums/Show/@forum.Id">@forum.ForumName</h5>
-                        <p class="card-text" style="color:grey">@forum.ForumDescription</p>
-                        <small>@forum.CountOfSubforums postari</small>
-                        <small>@forum.MsgCount mesaje</small>
-                    </div>
-                </div>
+                <partial name="ForumInfo" model="forum"></partial>
             }
 
         </div>
