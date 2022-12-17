@@ -5,25 +5,47 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using static System.Collections.Specialized.BitVector32;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace ForumApp.Controllers
 {
+    [Authorize]
     public class SubforumsController : Controller
     {
         private readonly ApplicationDbContext db;
-        public SubforumsController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;             // aceasta clasa are numeroase metode prin care putem sa prelucram useri
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public SubforumsController(
+        ApplicationDbContext context,
+        UserManager<ApplicationUser> userManager,
+        RoleManager<IdentityRole> roleManager
+        )
         {
             db = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
+
+        [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult Show(int id)
         {
             Subforum subforum = db.Subforums.Include("Posts").Include("Forum").Include("Section")
                 .Where(pos => pos.Id == id)
                 .First();
+            ViewBag.userForumCreator = subforum.Forum.UserId;
+            SetAccessRights();
             return View(subforum);
         }
 
+        private void SetAccessRights()
+        {
+            ViewBag.EsteAdmin = User.IsInRole("Admin");
+            ViewBag.EsteEditor = User.IsInRole("Editor");
 
+        }
+
+            [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult New(int id)
         {
             Subforum subforum = new Subforum();
@@ -38,7 +60,7 @@ namespace ForumApp.Controllers
                 return HttpNotFound();
             }
             subforum.ForumId = id;
-            ViewBag.sectionId = f.SectionId;
+            //ViewBag.sectionId = f.SectionId;
             ViewBag.sectionName = s.SectionName;
             ViewBag.forumId = f.Id;
             ViewBag.forumName = f.ForumName;
@@ -48,7 +70,9 @@ namespace ForumApp.Controllers
             subforum.AccessLevel = GetAllCategories();
             return View(subforum);
         }
+
         [HttpPost]
+        [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult New(int id, Subforum subforum)
         {
             Forum f = db.Forums.Find(id);
@@ -61,15 +85,13 @@ namespace ForumApp.Controllers
             {
                 return HttpNotFound();
             }
+            subforum.SectionId = f.SectionId;
             subforum.ForumId = id;
             subforum.CreationDate = DateTime.Now;
             subforum.MsgCount = 0;
             subforum.ViewCount = 0;
-/*            subforum.Creator = "NULL"; //TODO: De adaugat userul curent
-            subforum.LastPostUsr = "NULL";*/
-            subforum.AccessLevel = GetAllCategories();
+            subforum.UserId = _userManager.GetUserId(User);
             subforum.Id = 0; // Fara asta da SqlException: Cannot insert explicit value for identity column in table 'Subforums' when IDENTITY_INSERT is set to OFF. Nu intelegem de ce
-            subforum.SectionId = f.SectionId;
             if (ModelState.IsValid)
             {
                 db.Subforums.Add(subforum);
@@ -78,6 +100,7 @@ namespace ForumApp.Controllers
             }
             else
             {
+                subforum.AccessLevel = GetAllCategories();
                 ViewBag.sectionId = f.SectionId;
                 ViewBag.sectionName = s.SectionName;
                 ViewBag.forumId = f.Id;
@@ -87,6 +110,7 @@ namespace ForumApp.Controllers
         
         }
 
+        [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult Edit(int id)
         {
             Subforum subforum = db.Subforums.Find(id);
@@ -95,10 +119,22 @@ namespace ForumApp.Controllers
                 return HttpNotFound();
             }
             subforum.AccessLevel = GetAllCategories();
-            return View(subforum);
+
+            // verificam daca userul care modifica este creatorul subforumului
+            // sau este admin/editor
+            if(subforum.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin") || User.IsInRole("Editor"))
+            {
+                return View(subforum);
+            }
+            else
+            {
+                TempData["message"] = "Nu aveti drepturi de editare asupra acestei teme!";
+                return Redirect("/Subforums/Show/" + id);
+            }
         }
 
         [HttpPost]
+        [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult Edit(int id, Subforum requestSubforum)
         {
             Subforum subforum = db.Subforums.Find(id);
@@ -106,35 +142,61 @@ namespace ForumApp.Controllers
             {
                 return HttpNotFound();
             }
-            requestSubforum.AccessLevel = GetAllCategories();
             if(ModelState.IsValid)
             {
-                subforum.SubforumName = requestSubforum.SubforumName;
-                subforum.SubforumDesc = requestSubforum.SubforumDesc;
-                subforum.AccessLevel = requestSubforum.AccessLevel;
-                db.SaveChanges();
-                return Redirect("/Subforums/Show/" + id);
+                // verificam ca cineva sa nu faca smecherii sa dovedeasca sa editeze subforumul
+                if(subforum.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin") || User.IsInRole("Editor"))
+                {
+                    subforum.SubforumName = requestSubforum.SubforumName;
+                    subforum.SubforumDesc = requestSubforum.SubforumDesc;
+                    subforum.AccessLevel = requestSubforum.AccessLevel;
+                    db.SaveChanges();
+                    return Redirect("/Subforums/Show/" + id);
+                }
+                else
+                {
+                    TempData["message"] = "Nu aveti drepturi de editare asupra acestei teme!";
+                    return Redirect("/Subforums/Show/" + id);
+                }
             }
             else
             {
+                requestSubforum.AccessLevel = GetAllCategories();
                 return View(requestSubforum);
             }
         }
 
         [HttpPost]
+        [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult Delete(int id)
         {
-            Subforum subforum = db.Subforums.Find(id);
+            /*Subforum subforum = db.Subforums.Find(id);*/   // nu merge cu find cand are postari
+
+            Subforum subforum = db.Subforums.Include("Posts")
+                                            .Where(sf => sf.Id == id)
+                                            .First();
+
             if (subforum == null)
             {
                 return HttpNotFound();
             }
-            db.Subforums.Remove(subforum);
-            db.SaveChanges();
-            return Redirect("/Forums/Show/" + subforum.ForumId);
+            // daca este idul userului care a creat subforumul
+            // daca este admin sau editor
+            if (subforum.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin") || User.IsInRole("Editor"))
+            {
+                db.Subforums.Remove(subforum);
+                db.SaveChanges();
+                return Redirect("/Forums/Show/" + subforum.ForumId);
+            }
+            else
+            {
+                TempData["message"] = "Nu aveti drepturi sa stergeti o tema care nu va apartine!";
+                return Redirect("/Subforums/Show/" + id);
+            }
+            
         }
 
-            private IActionResult HttpNotFound()
+        private IActionResult HttpNotFound()
         {
             throw new NotImplementedException();
         }

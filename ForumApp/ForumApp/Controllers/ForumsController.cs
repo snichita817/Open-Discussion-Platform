@@ -13,7 +13,7 @@ namespace ForumApp.Controllers
     {
 
         private readonly ApplicationDbContext db;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;             // aceasta clasa are numeroase metode prin care putem sa prelucram useri
         private readonly RoleManager<IdentityRole> _roleManager;
         public ForumsController(
         ApplicationDbContext context,
@@ -38,9 +38,18 @@ namespace ForumApp.Controllers
             Forum forum = db.Forums.Include("Section").Include("Subforums").Include("User")
                             .Where(foru => foru.Id == id)
                             .First();
+            SetAccessRights();
             return View(forum);
         }
 
+        private void SetAccessRights()
+        {
+            ViewBag.IsAdminn = User.IsInRole("Admin");
+            ViewBag.IsEditor = User.IsInRole("Editor");
+            ViewBag.UserCurent = _userManager.GetUserId(User);
+        }
+
+        [Authorize(Roles = "Editor,Admin")]
         public IActionResult New(int? id)
         {
             Forum forum = new Forum();
@@ -59,12 +68,10 @@ namespace ForumApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Editor,Admin")]
         public IActionResult New(Forum forum, int? id)
         {
-   
-            forum.ForumAccess = GetAllCategories();
-            forum.Sect = GetAllSections();
-
+            forum.UserId = _userManager.GetUserId(User);        // preluam idul si il stocam in baza de date
             forum.Id = 0;
             if (ModelState.IsValid)
             {
@@ -76,10 +83,17 @@ namespace ForumApp.Controllers
             }
             else
             {
+                forum.ForumAccess = GetAllCategories();
+                forum.Sect = GetAllSections();
+                // mutam cele doua actiuni din afara in interiorul else-ului pentru eficienta programului
+                // cele doua metode se apeleaza doar daca crearea forumul nu a avut succes
+                // pentru ca noi sa avem din nou informatiile din dropdown-uri
+
                 return View(forum);
             }
         }
 
+        [Authorize(Roles = "Editor,Admin")]
         public IActionResult Edit(int id)
         {
             Forum forum = db.Forums.Include("Section")
@@ -91,6 +105,7 @@ namespace ForumApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Editor,Admin")]
         public IActionResult Edit(int id, Forum requestForum)
         {
             Forum forum = db.Forums.Find(id);
@@ -113,9 +128,13 @@ namespace ForumApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Editor,Admin")]
         public ActionResult Delete(int id)
         {
-            Forum forum = db.Forums.Find(id);
+            /*Forum forum = db.Forums.Find(id);*/
+            Forum forum = db.Forums.Include("Subforums")
+                                   .Where(f => f.Id == id)
+                                   .First();
             db.Forums.Remove(forum);
             db.SaveChanges();
             return Redirect("/Sections/Index");

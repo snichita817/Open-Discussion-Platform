@@ -206,7 +206,7 @@ namespace ForumApp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ForumId = table.Column<int>(type: "int", nullable: true),
-                    SectionId = table.Column<int>(type: "int", nullable: false),
+                    SectionId = table.Column<int>(type: "int", nullable: true),
                     SubforumType = table.Column<int>(type: "int", nullable: false),
                     SubforumName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     MsgCount = table.Column<int>(type: "int", nullable: false),
@@ -232,8 +232,7 @@ namespace ForumApp.Migrations
                         name: "FK_Subforums_Sections_SectionId",
                         column: x => x.SectionId,
                         principalTable: "Sections",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -244,7 +243,7 @@ namespace ForumApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PostTitle = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     PostContent = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: false),
-                    SubforumId = table.Column<int>(type: "int", nullable: false),
+                    SubforumId = table.Column<int>(type: "int", nullable: true),
                     PostDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -261,8 +260,7 @@ namespace ForumApp.Migrations
                         name: "FK_Posts_Subforums_SubforumId",
                         column: x => x.SubforumId,
                         principalTable: "Subforums",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

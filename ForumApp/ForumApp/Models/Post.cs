@@ -17,7 +17,7 @@ namespace ForumApp.Models
         [StringLength(10000, ErrorMessage = "Lungimea maxima trebuie sa fie de 10000 de caractere")]
         public string PostContent { get; set; }
 
-        [Required(ErrorMessage = "Id-ul subforumului trebuie sa fie specificat!")]
+        //[Required(ErrorMessage = "Id-ul subforumului trebuie sa fie specificat!")]
         public int? SubforumId { get; set; }
 
         [Required(ErrorMessage = "Data postarii trebuie sa fie specificata!")]

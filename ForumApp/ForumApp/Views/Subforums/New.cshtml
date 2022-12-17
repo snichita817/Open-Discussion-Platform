@@ -17,6 +17,7 @@
         <div class="col-6 offset-3">
             @using (Html.BeginForm(method: FormMethod.Post, actionName: "New", controllerName: "Subforums"))
             {
+@*                <p>@Model.SectionId</p>*@
                 @Html.Label("SubforumName", "Name of the Subforum");
                 <br />
                 @Html.TextBox("SubforumName", null, new { @class = "form-control" });

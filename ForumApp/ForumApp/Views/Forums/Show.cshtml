@@ -14,10 +14,18 @@
     <div class="card-body">
         <h5 class="card-title">@Model.ForumName</h5>
         <p class="card-text">@Model.ForumDescription</p>
-        <a class="btn btn-outline-success" href="/Forums/Edit/@Model.Id">Edit forum details</a>
-        <form method="post" action="/Forums/Delete/@Model.Id">
-            <button class="btn btn-danger" type="submit">Delete forum</button>
-        </form>
+        @if (ViewBag.IsAdminn == true || ViewBag.IsEditor == true)                            @* butonul de EDIT poate fi accesat de ADMIN, EDITOR *@
+        {
+            <a class="btn btn-outline-success" href="/Forums/Edit/@Model.Id">Edit forum details</a>
+        }
+       
+        @if (ViewBag.IsAdminn == true || Model.UserId == ViewBag.UserCurent)                  @* butonul de DELETE poate fi accesat de ADMIN, EDITOR care l-a creat *@
+        {
+            <p>@ViewBag.IsAdmin</p>
+            <form method="post" action="/Forums/Delete/@Model.Id">
+                <button class="btn btn-danger" type="submit">Delete forum</button>
+            </form>
+        }
     </div>
 </div>
 

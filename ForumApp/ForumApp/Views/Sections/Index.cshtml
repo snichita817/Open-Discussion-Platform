@@ -7,8 +7,13 @@
 </nav>
 
 <h2>Forums</h2>
-<a class="btn btn-outline-success" href="/Sections/New/">Add new section</a> @*trebuie mutat asta*@
+
+@if (ViewBag.AdaugareSectiuni == true)     @* daca e true atunci este ADMIN *@
+{
+    <a class="btn btn-outline-success" href="/Sections/New/">Add new section</a> @*trebuie mutat asta*@
+}
 <a class="btn btn-outline-success" href="/Forums/New/">Add new forum</a>
+
 <br />
 <br />
 @foreach (var sect in ViewBag.Sections)
@@ -27,7 +32,6 @@
                     }
                     
                 }
-
             </div>
         </div>
         <br />

@@ -10,7 +10,6 @@ namespace ForumApp.Models
         public int Id { get; set; }
 
         public int? ForumId { get; set; }
-        [Required(ErrorMessage = "Subforumul trebuie sa apartina de o sectiune!")]
         public int? SectionId { get; set; }
 
         [Required(ErrorMessage = "Tipul subforumului este obligatoriu!")]
@@ -23,20 +22,12 @@ namespace ForumApp.Models
 
         public int MsgCount { get; set; }
         public int ViewCount { get; set; }
-        
-        // [Required(ErrorMessage = "Precizarea userului care a creat subforumul este obligatorie!")]
-
-/*        public string? Creator { get; set; }
-
-        public string? LastPostUsr { get; set; }*/
 
         public string? SubforumDesc { get; set; }
 
         [Required(ErrorMessage = "Data crearii subforumului este obligatorie!")]
         public DateTime CreationDate { get; set; }
-        [ForeignKey("ForumId")]
         public virtual Forum? Forum { get; set; }
-        [ForeignKey("SectionId")]
         public virtual Section? Section { get; set; }
         public string? UserId { get; set; }
 

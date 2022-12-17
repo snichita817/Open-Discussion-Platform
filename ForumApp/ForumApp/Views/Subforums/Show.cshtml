@@ -14,11 +14,17 @@
     <div class="card-body">
         <h4 class="card-title">@Model.SubforumName</h4>
         <h5>@Model.SubforumDesc</h5>
-        <a class="btn btn-outline-success" href="/Subforums/Edit/@Model.Id">Edit Subforum</a>
+
+        @* Subforumul poate fi editat/sters de userul care l-a creat, creatorul forumului, editor, admin *@
+        @if (ViewBag.EsteAdmin == true || ViewBag.EsteEditor == true || ViewBag.userForumCreator == ViewBag.UserCurent || ViewBag.UserCurent == Model.UserId)
+        {
+            <a class="btn btn-outline-success" href="/Subforums/Edit/@Model.Id">Edit Subforum</a>
         
-        <form method="post" action="/Subforums/Delete/@Model.Id">
-            <button class="btn btn-danger" type="submit">Delete Subforum</button>
-        </form>
+            <form method="post" action="/Subforums/Delete/@Model.Id">
+                <button class="btn btn-danger" type="submit">Delete Subforum</button>
+            </form>
+        }
+        
     </div>
 </div>
 <br />

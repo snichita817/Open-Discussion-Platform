@@ -1,16 +1,29 @@
 ﻿using ForumApp.Data;
 using ForumApp.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ForumApp.Controllers
 {
+    [Authorize]
     public class PostsController : Controller
     {
         private readonly ApplicationDbContext db;
-        public PostsController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public PostsController(
+        ApplicationDbContext context,
+        UserManager<ApplicationUser> userManager,
+        RoleManager<IdentityRole> roleManager
+        )
         {
             db = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
+
+        [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult New(int id)
         {
             Post post = new Post();
@@ -37,6 +50,7 @@ namespace ForumApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult New(int id, Post post)
         {
 
@@ -47,6 +61,7 @@ namespace ForumApp.Controllers
             {
                 return HttpNotFound();
             }
+            post.UserId = _userManager.GetUserId(User);
             post.SubforumId = id;
             post.PostDate = DateTime.Now;
             post.Id = 0;
@@ -68,6 +83,7 @@ namespace ForumApp.Controllers
             }
         }
 
+        [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult Show(int id)
         {
             Post post = db.Posts
@@ -89,6 +105,7 @@ namespace ForumApp.Controllers
             return View(post);
         }
 
+        [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult Edit(int id)
         {
             Post post = db.Posts.Find(id);
@@ -99,16 +116,26 @@ namespace ForumApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.subforumId = s.Id;
-            ViewBag.subforumName = s.SubforumName;
-            ViewBag.forumId = f.Id;
-            ViewBag.forumName = f.ForumName;
-            ViewBag.sectionId = sec.Id;
-            ViewBag.sectionName = sec.SectionName;
-            return View(post);
+
+            if(post.UserId == _userManager.GetUserId(User) || User.IsInRole("Editor") || User.IsInRole("Admin"))
+            {
+                ViewBag.subforumId = s.Id;
+                ViewBag.subforumName = s.SubforumName;
+                ViewBag.forumId = f.Id;
+                ViewBag.forumName = f.ForumName;
+                ViewBag.sectionId = sec.Id;
+                ViewBag.sectionName = sec.SectionName;
+                return View(post);
+            }
+            else
+            {
+                TempData["message"] = "Nu aveti drepturi de editare asupra acestui continut!";
+                return RedirectToAction("Show", "Subforums", new { id = post.SubforumId });
+            }
         }
 
         [HttpPost]
+        [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult Edit(int id, Post requestPost)
         {
             Post post = db.Posts.Find(id);
@@ -121,10 +148,19 @@ namespace ForumApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                post.PostTitle = requestPost.PostTitle;
-                post.PostContent = requestPost.PostContent;
-                db.SaveChanges();
-                return RedirectToAction("Show", "Subforums", new { id = post.SubforumId });
+                if (post.UserId == _userManager.GetUserId(User) || User.IsInRole("Editor") || User.IsInRole("Admin"))
+                {
+                    post.PostTitle = requestPost.PostTitle;
+                    post.PostContent = requestPost.PostContent;
+                    db.SaveChanges();
+                    return RedirectToAction("Show", "Subforums", new { id = post.SubforumId });
+                    
+                }
+                else
+                {
+                    TempData["message"] = "Nu aveti drepturi de editare asupra acestui continut!";
+                    return RedirectToAction("Show", "Subforums", new { id = post.SubforumId });
+                }
             }
             else
             {
@@ -139,6 +175,7 @@ namespace ForumApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult Delete(int id)
         {
             Post post = db.Posts.Find(id);
@@ -146,8 +183,15 @@ namespace ForumApp.Controllers
             {
                 return HttpNotFound();
             }
-            db.Posts.Remove(post);
-            db.SaveChanges();
+            if (post.UserId == _userManager.GetUserId(User) || User.IsInRole("Editor") || User.IsInRole("Admin"))
+            {
+                db.Posts.Remove(post);
+                db.SaveChanges();
+            }
+            else
+            {
+                TempData["message"] = "Nu aveti drepturi de stergere asupra acestui continut!";
+            }
             return RedirectToAction("Show", "Subforums", new { id = post.SubforumId });
         }
 

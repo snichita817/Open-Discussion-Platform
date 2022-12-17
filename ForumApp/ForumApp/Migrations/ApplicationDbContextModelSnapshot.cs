@@ -152,7 +152,6 @@ namespace ForumApp.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("SubforumId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
@@ -211,7 +210,6 @@ namespace ForumApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("SectionId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("SubforumDesc")
@@ -400,9 +398,7 @@ namespace ForumApp.Migrations
                 {
                     b.HasOne("ForumApp.Models.Subforum", null)
                         .WithMany("Posts")
-                        .HasForeignKey("SubforumId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SubforumId");
 
                     b.HasOne("ForumApp.Models.ApplicationUser", "User")
                         .WithMany()
@@ -419,9 +415,7 @@ namespace ForumApp.Migrations
 
                     b.HasOne("ForumApp.Models.Section", "Section")
                         .WithMany()
-                        .HasForeignKey("SectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SectionId");
 
                     b.HasOne("ForumApp.Models.ApplicationUser", "User")
                         .WithMany()
