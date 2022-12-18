@@ -10,7 +10,6 @@ namespace ForumApp.Models
         public int Id { get; set; }
 
         public int? ForumId { get; set; }
-        public int? SectionId { get; set; }
 
         [Required(ErrorMessage = "Tipul subforumului este obligatoriu!")]
         public int SubforumType { get; set; }
@@ -28,7 +27,6 @@ namespace ForumApp.Models
         [Required(ErrorMessage = "Data crearii subforumului este obligatorie!")]
         public DateTime CreationDate { get; set; }
         public virtual Forum? Forum { get; set; }
-        public virtual Section? Section { get; set; }
         public string? UserId { get; set; }
 
         // dc e nullable?

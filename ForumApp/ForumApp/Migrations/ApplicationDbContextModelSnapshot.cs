@@ -209,9 +209,6 @@ namespace ForumApp.Migrations
                     b.Property<int>("MsgCount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SectionId")
-                        .HasColumnType("int");
-
                     b.Property<string>("SubforumDesc")
                         .HasColumnType("nvarchar(max)");
 
@@ -232,8 +229,6 @@ namespace ForumApp.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ForumId");
-
-                    b.HasIndex("SectionId");
 
                     b.HasIndex("UserId");
 
@@ -396,13 +391,15 @@ namespace ForumApp.Migrations
 
             modelBuilder.Entity("ForumApp.Models.Post", b =>
                 {
-                    b.HasOne("ForumApp.Models.Subforum", null)
+                    b.HasOne("ForumApp.Models.Subforum", "Subforum")
                         .WithMany("Posts")
                         .HasForeignKey("SubforumId");
 
                     b.HasOne("ForumApp.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Subforum");
 
                     b.Navigation("User");
                 });
@@ -413,17 +410,11 @@ namespace ForumApp.Migrations
                         .WithMany("Subforums")
                         .HasForeignKey("ForumId");
 
-                    b.HasOne("ForumApp.Models.Section", "Section")
-                        .WithMany()
-                        .HasForeignKey("SectionId");
-
                     b.HasOne("ForumApp.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("Forum");
-
-                    b.Navigation("Section");
 
                     b.Navigation("User");
                 });

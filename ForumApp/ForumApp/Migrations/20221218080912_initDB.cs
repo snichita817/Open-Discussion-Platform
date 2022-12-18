@@ -206,7 +206,6 @@ namespace ForumApp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ForumId = table.Column<int>(type: "int", nullable: true),
-                    SectionId = table.Column<int>(type: "int", nullable: true),
                     SubforumType = table.Column<int>(type: "int", nullable: false),
                     SubforumName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     MsgCount = table.Column<int>(type: "int", nullable: false),
@@ -227,11 +226,6 @@ namespace ForumApp.Migrations
                         name: "FK_Subforums_Forums_ForumId",
                         column: x => x.ForumId,
                         principalTable: "Forums",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Subforums_Sections_SectionId",
-                        column: x => x.SectionId,
-                        principalTable: "Sections",
                         principalColumn: "Id");
                 });
 
@@ -326,11 +320,6 @@ namespace ForumApp.Migrations
                 name: "IX_Subforums_ForumId",
                 table: "Subforums",
                 column: "ForumId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Subforums_SectionId",
-                table: "Subforums",
-                column: "SectionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Subforums_UserId",

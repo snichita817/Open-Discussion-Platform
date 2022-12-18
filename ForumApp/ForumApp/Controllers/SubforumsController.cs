@@ -30,7 +30,7 @@ namespace ForumApp.Controllers
         [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult Show(int id)
         {
-            Subforum subforum = db.Subforums.Include("Posts").Include("Forum").Include("Section")
+            Subforum subforum = db.Subforums.Include("Posts").Include("Forum")
                 .Where(pos => pos.Id == id)
                 .First();
             ViewBag.userForumCreator = subforum.Forum.UserId;
@@ -43,28 +43,29 @@ namespace ForumApp.Controllers
             ViewBag.EsteAdmin = User.IsInRole("Admin");
             ViewBag.EsteEditor = User.IsInRole("Editor");
 
+            ViewBag.UserCurent = _userManager.GetUserId(User);
         }
 
-            [Authorize(Roles = "User,Editor,Admin")]
+        [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult New(int id)
         {
             Subforum subforum = new Subforum();
             Forum f = db.Forums.Find(id);
-            Models.Section s = db.Sections.Find(f.SectionId);
+            //Models.Section s = db.Sections.Find(f.SectionId);
             if (f == null)
             {
                 return HttpNotFound();
             }
-            if (s == null)
+/*            if (s == null)
             {
                 return HttpNotFound();
-            }
+            }*/
             subforum.ForumId = id;
             //ViewBag.sectionId = f.SectionId;
-            ViewBag.sectionName = s.SectionName;
+            //ViewBag.sectionName = s.SectionName;
             ViewBag.forumId = f.Id;
             ViewBag.forumName = f.ForumName;
-            subforum.SectionId = f.SectionId;
+            //subforum.SectionId = f.SectionId;
 
 
             subforum.AccessLevel = GetAllCategories();
@@ -76,16 +77,17 @@ namespace ForumApp.Controllers
         public IActionResult New(int id, Subforum subforum)
         {
             Forum f = db.Forums.Find(id);
-            Models.Section s = db.Sections.Find(f.SectionId);
+            //Models.Section s = db.Sections.Find(f.SectionId);
             if (f == null)
             {
                 return HttpNotFound();
             }
-            if (s == null)
+/*            if (s == null)
             {
                 return HttpNotFound();
-            }
-            subforum.SectionId = f.SectionId;
+            }*/
+            
+            //subforum.SectionId = f.SectionId;
             subforum.ForumId = id;
             subforum.CreationDate = DateTime.Now;
             subforum.MsgCount = 0;
@@ -101,8 +103,8 @@ namespace ForumApp.Controllers
             else
             {
                 subforum.AccessLevel = GetAllCategories();
-                ViewBag.sectionId = f.SectionId;
-                ViewBag.sectionName = s.SectionName;
+                //ViewBag.sectionId = f.SectionId;
+                //ViewBag.sectionName = s.SectionName;
                 ViewBag.forumId = f.Id;
                 ViewBag.forumName = f.ForumName;
                 return View(subforum);
@@ -170,7 +172,7 @@ namespace ForumApp.Controllers
         [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult Delete(int id)
         {
-            /*Subforum subforum = db.Subforums.Find(id);*/   // nu merge cu find cand are postari
+           // Subforum subforum = db.Subforums.Find(id);   // nu merge cu find cand are postari
 
             Subforum subforum = db.Subforums.Include("Posts")
                                             .Where(sf => sf.Id == id)
@@ -180,6 +182,7 @@ namespace ForumApp.Controllers
             {
                 return HttpNotFound();
             }
+
             // daca este idul userului care a creat subforumul
             // daca este admin sau editor
             if (subforum.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin") || User.IsInRole("Editor"))

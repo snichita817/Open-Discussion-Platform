@@ -49,7 +49,7 @@ namespace ForumApp.Controllers
             ViewBag.UserCurent = _userManager.GetUserId(User);
         }
 
-        [Authorize(Roles = "Editor,Admin")]
+        [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult New(int? id)
         {
             Forum forum = new Forum();
@@ -68,7 +68,7 @@ namespace ForumApp.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Editor,Admin")]
+        [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult New(Forum forum, int? id)
         {
             forum.UserId = _userManager.GetUserId(User);        // preluam idul si il stocam in baza de date
@@ -105,7 +105,7 @@ namespace ForumApp.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Editor,Admin")]
+        [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult Edit(int id, Forum requestForum)
         {
             Forum forum = db.Forums.Find(id);
@@ -128,13 +128,15 @@ namespace ForumApp.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Editor,Admin")]
+        [Authorize(Roles = "User,Editor,Admin")]
         public ActionResult Delete(int id)
         {
-            /*Forum forum = db.Forums.Find(id);*/
-            Forum forum = db.Forums.Include("Subforums")
-                                   .Where(f => f.Id == id)
-                                   .First();
+            /*            Forum forum = db.Forums.Find(id);*/
+            /*            Forum forum = db.Forums.Include("Subforums")
+                                               .Where(f => f.Id == id)
+                                               .First();*/
+            var forum = db.Forums.Include(f => f.Subforums)
+                                 .FirstOrDefault(f => f.Id == id);
             db.Forums.Remove(forum);
             db.SaveChanges();
             return Redirect("/Sections/Index");

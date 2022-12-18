@@ -35,7 +35,7 @@ namespace ForumApp.Models
         // TODO: De pus userul obligatoriu de updatat automat
         /*        public int? UserId { get; set; }*/
 
-        // public virtual Subforum? Subforum { get; set; }
+        public virtual Subforum? Subforum { get; set; }
 
         public string? UserName { get; set; }
 

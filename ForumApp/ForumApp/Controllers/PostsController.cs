@@ -44,9 +44,20 @@ namespace ForumApp.Controllers
             ViewBag.forumName = f.ForumName;
             ViewBag.sectionId = sec.Id;
             ViewBag.sectionName = sec.SectionName;
+
+            
+
             post.PostDate = DateTime.Now;
             //TODO: User
             return View(post);
+        }
+
+        private void SetAccessRights()
+        {
+            ViewBag.EsteAdmin = User.IsInRole("Admin");
+            ViewBag.EsteEditor = User.IsInRole("Editor");
+
+            ViewBag.UserCurent = _userManager.GetUserId(User);
         }
 
         [HttpPost]
@@ -96,6 +107,10 @@ namespace ForumApp.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.userForumCreator = f.UserId;
+            SetAccessRights();
+
             ViewBag.subforumId = s.Id;
             ViewBag.subforumName = s.SubforumName;
             ViewBag.forumId = f.Id;
