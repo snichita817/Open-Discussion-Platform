@@ -131,12 +131,12 @@ namespace ForumApp.Controllers
         [Authorize(Roles = "User,Editor,Admin")]
         public ActionResult Delete(int id)
         {
-            /*            Forum forum = db.Forums.Find(id);*/
-            /*            Forum forum = db.Forums.Include("Subforums")
-                                               .Where(f => f.Id == id)
-                                               .First();*/
-            var forum = db.Forums.Include(f => f.Subforums)
-                                 .FirstOrDefault(f => f.Id == id);
+           // Forum forum = db.Forums.Find(id); /*: The DELETE statement conflicted with the REFERENCE constraint "FK_Subforums_Forums_ForumId". The conflict occurred in database "aspnet-ForumApp-B81DF690-405B-48DC-BA7C-CC7910F869E8", table "dbo.Subforums", column 'ForumId'.The statement has been terminated.*/
+            var forum = db.Forums.Include("Subforums")
+                                   .Where(f => f.Id == id)
+                                   .First();
+            /*var forum = db.Forums.Include(f => f.Subforums)
+                                 .FirstOrDefault(f => f.Id == id);*/
             db.Forums.Remove(forum);
             db.SaveChanges();
             return Redirect("/Sections/Index");

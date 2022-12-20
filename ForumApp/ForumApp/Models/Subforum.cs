@@ -9,7 +9,7 @@ namespace ForumApp.Models
         [Key]
         public int Id { get; set; }
 
-        public int? ForumId { get; set; }
+        public int ForumId { get; set; }
 
         [Required(ErrorMessage = "Tipul subforumului este obligatoriu!")]
         public int SubforumType { get; set; }
@@ -30,7 +30,7 @@ namespace ForumApp.Models
         public string? UserId { get; set; }
 
         // dc e nullable?
-        // practica buna, deoarece subforumul nu o sa aibe proprietatea asta instant
+        // deoarece subforumul nu o sa aibe proprietatea asta instant
         // mai intai se adauga cheia externa userId si dupa aceea se populeaza aceasta propriete
         // => va fi un interval cand e null
         public virtual ApplicationUser? User { get; set; }           // subforumul apartine unui singur utilizator

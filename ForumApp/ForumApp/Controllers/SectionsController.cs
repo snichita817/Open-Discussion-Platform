@@ -148,7 +148,6 @@ namespace ForumApp.Controllers
         public ActionResult Delete(int id)
         {
             /*Section section = db.Sections.Find(id);*/
-
             Section section = db.Sections.Include("Forums")
                                          .Where(sec => sec.Id == id)
                                          .First();

@@ -10,7 +10,7 @@ namespace ForumApp.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Sectiunea este obligatorie!")]
-        public int? SectionId { get; set; }
+        public int SectionId { get; set; }
         [MinLength(5, ErrorMessage = "Lungimea minima trebuie sa fie de 5 caractere")]
         [StringLength(100, ErrorMessage = "Lungimea maxima trebuie sa fie de 100 de caractere")]
         [Required(ErrorMessage = "Numele forumului este obligatoriu!")]
