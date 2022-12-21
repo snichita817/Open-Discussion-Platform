@@ -1,4 +1,5 @@
 ﻿@model ForumApp.Models.Subforum
+@using System.Web;
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -43,7 +44,7 @@
                 <div class="card-body">
                     <h5 class="card-title"><a style="text-decoration:none; color:black" href="/Posts/Show/@pos.Id">@pos.PostTitle</a></h5>
                     <small>@pos.PostDate</small>
-                    <p class="card-text">@pos.PostContent</p>
+                    @Html.Raw(HttpUtility.HtmlDecode(@pos.PostContent))
                     <small style="color:gray">Postat de: @pos.UserName</small>
                 </div>
             </div>

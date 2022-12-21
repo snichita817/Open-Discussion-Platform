@@ -8,7 +8,7 @@ namespace ForumApp.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Titlul este obligatoriu!")]
-        [MinLength(5, ErrorMessage = "Lungimea minima trebuie sa fie de 5 caractere")]
+        [MinLength(1, ErrorMessage = "Lungimea minima trebuie sa fie de 1 caracter")]
         [StringLength(100, ErrorMessage = "Lungimea maxima trebuie sa fie de 100 de caractere")]
         public string PostTitle { get; set; }
 

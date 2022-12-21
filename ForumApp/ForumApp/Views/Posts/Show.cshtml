@@ -1,4 +1,5 @@
 ﻿@model ForumApp.Models.Post
+@using System.Web;
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -22,11 +23,12 @@
             </form>
         }
         
+
         <div class="card" style="width: 35rem;">
             <div class="card-body">
                 <h5 class="card-title">@Model.PostTitle</h5>
                 <small>@Model.PostDate</small>
-                <p class="card-text">@Model.PostContent</p>
+                @Html.Raw(HttpUtility.HtmlDecode(@Model.PostContent))
                 <small style="color:gray">Postat de: @Model.UserName</small>
             </div>
     </div>
