@@ -72,13 +72,17 @@ namespace ForumApp.Controllers
             {
                 return HttpNotFound();
             }
+            
             post.UserId = _userManager.GetUserId(User);
+            post.UserName = _userManager.GetUserName(User);
             post.SubforumId = id;
             post.PostDate = DateTime.Now;
             post.Id = 0;
             if (ModelState.IsValid)
             {
                 db.Posts.Add(post);
+                s.MsgCount++;
+                f.MsgCount++;
                 db.SaveChanges();
                 return RedirectToAction("Show", "Subforums", new { id = post.SubforumId });
             }

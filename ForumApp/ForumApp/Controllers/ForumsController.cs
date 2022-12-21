@@ -73,11 +73,13 @@ namespace ForumApp.Controllers
         {
             forum.UserId = _userManager.GetUserId(User);        // preluam idul si il stocam in baza de date
             forum.Id = 0;
+            Section s = db.Sections.Find(forum.SectionId);
             if (ModelState.IsValid)
             {
                 forum.Id = 0;                   // setam explicit valoarea Id-ului la 0, deoarece nsh dc din moment ce pasam Idul sectiunii se schimba ceva aici
                                                 // baza de date vrea sa primeasca Id 0, deoarece face auto increment la cheie primara
                 db.Forums.Add(forum);
+                s.CountOfForums++;
                 db.SaveChanges();
                 return Redirect("/Sections/Index");
             }

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using static System.Collections.Specialized.BitVector32;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Section = ForumApp.Models.Section;
 
 namespace ForumApp.Controllers
 {
@@ -77,8 +78,9 @@ namespace ForumApp.Controllers
         public IActionResult New(int id, Subforum subforum)
         {
             Forum f = db.Forums.Find(id);
+            Section s = db.Sections.Find(f.SectionId);
             //Models.Section s = db.Sections.Find(f.SectionId);
-            if (f == null)
+            if (f == null || s == null)
             {
                 return HttpNotFound();
             }
@@ -97,6 +99,7 @@ namespace ForumApp.Controllers
             if (ModelState.IsValid)
             {
                 db.Subforums.Add(subforum);
+                f.CountOfSubforums++;
                 db.SaveChanges();
                 return Redirect("/Forums/Show/" + id);
             }
