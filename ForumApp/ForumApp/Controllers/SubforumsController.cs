@@ -34,6 +34,7 @@ namespace ForumApp.Controllers
             Subforum subforum = db.Subforums.Include("Posts").Include("Forum")
                 .Where(pos => pos.Id == id)
                 .First();
+
             ViewBag.userForumCreator = subforum.Forum.UserId;
             SetAccessRights();
             return View(subforum);
