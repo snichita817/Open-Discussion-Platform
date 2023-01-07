@@ -40,6 +40,35 @@ namespace ForumApp.Controllers
             return View(subforum);
         }
 
+        [HttpPost]
+        public IActionResult Show([FromForm] Post post)
+        {
+            Subforum s = db.Subforums.Find(post.SubforumId);
+            Forum f = db.Forums.Find(s.ForumId);
+            Section sec = db.Sections.Find(f.SectionId);
+            if (s == null || f == null || sec == null)
+            {
+                return HttpNotFound();
+            }
+
+            post.UserId = _userManager.GetUserId(User);
+            post.UserName = _userManager.GetUserName(User);
+            post.PostDate = DateTime.Now;
+            post.Id = 0;
+            if (ModelState.IsValid)
+            {
+                db.Posts.Add(post);
+                s.MsgCount++;
+                f.MsgCount++;
+                db.SaveChanges();
+                return RedirectToAction("Show", "Subforums", new { id = post.SubforumId });
+            }
+            else
+            {
+                return Redirect("Subforums/Show/" + post.SubforumId);
+            }
+        }
+
         private void SetAccessRights()
         {
             ViewBag.EsteAdmin = User.IsInRole("Admin");
