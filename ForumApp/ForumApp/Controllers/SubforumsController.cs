@@ -8,6 +8,7 @@ using static System.Collections.Specialized.BitVector32;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Section = ForumApp.Models.Section;
+using Ganss.Xss;
 
 namespace ForumApp.Controllers
 {
@@ -43,6 +44,8 @@ namespace ForumApp.Controllers
         [HttpPost]
         public IActionResult Show([FromForm] Post post)
         {
+            var sanitizer = new HtmlSanitizer();
+
             Subforum s = db.Subforums.Find(post.SubforumId);
             Forum f = db.Forums.Find(s.ForumId);
             Section sec = db.Sections.Find(f.SectionId);
@@ -57,6 +60,9 @@ namespace ForumApp.Controllers
             post.Id = 0;
             if (ModelState.IsValid)
             {
+                post.PostContent = sanitizer.Sanitize(post.PostContent);
+                post.PostTitle = sanitizer.Sanitize(post.PostTitle);
+
                 db.Posts.Add(post);
                 s.MsgCount++;
                 f.MsgCount++;

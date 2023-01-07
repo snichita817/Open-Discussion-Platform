@@ -1,5 +1,6 @@
 ﻿using ForumApp.Data;
 using ForumApp.Models;
+using Ganss.Xss;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -157,6 +158,8 @@ namespace ForumApp.Controllers
         [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult Edit(int id, Post requestPost)
         {
+            var sanitizer = new HtmlSanitizer();
+
             Post post = db.Posts.Find(id);
             Subforum s = db.Subforums.Find(post.SubforumId);
             Forum f = db.Forums.Find(s.ForumId);
@@ -169,8 +172,10 @@ namespace ForumApp.Controllers
             {
                 if (post.UserId == _userManager.GetUserId(User) || User.IsInRole("Editor") || User.IsInRole("Admin"))
                 {
-                    post.PostTitle = requestPost.PostTitle;
-                    post.PostContent = requestPost.PostContent;
+                    
+
+                    post.PostTitle = sanitizer.Sanitize(requestPost.PostTitle);
+                    post.PostContent = sanitizer.Sanitize(requestPost.PostContent);
                     db.SaveChanges();
                     return RedirectToAction("Show", "Subforums", new { id = post.SubforumId });
                     

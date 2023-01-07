@@ -1,9 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "JuFrVfxug/qv+mYoAW+xAB/ueiWXy0811dB2qiufDq22UJje4wq8UWzJ+N/1k9QLqlN7iNdd5AW2Y+FHcSObng==",
+  "dgSpecHash": "f0EjRD3iucq6JHEe02nIJ8A7A3Cjcb6kYvSG2o2NLRasf0iE8kcwAnunNKvQX22KICsC3qGklrcQqZQ8qEXR7g==",
   "success": true,
   "projectFilePath": "D:\\Teme\\Informatica\\Github\\Proiect-.NET-Sem-1-An-2-\\ForumApp\\ForumApp\\ForumApp.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\alexa\\.nuget\\packages\\anglesharp\\0.17.1\\anglesharp.0.17.1.nupkg.sha512",
+    "C:\\Users\\alexa\\.nuget\\packages\\anglesharp.css\\0.16.4\\anglesharp.css.0.16.4.nupkg.sha512",
+    "C:\\Users\\alexa\\.nuget\\packages\\htmlsanitizer\\8.0.601\\htmlsanitizer.8.0.601.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\messagepack.annotations\\2.1.152\\messagepack.annotations.2.1.152.nupkg.sha512",
@@ -105,7 +108,7 @@
     "C:\\Users\\alexa\\.nuget\\packages\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\system.appcontext\\4.3.0\\system.appcontext.4.3.0.nupkg.sha512",
-    "C:\\Users\\alexa\\.nuget\\packages\\system.buffers\\4.3.0\\system.buffers.4.3.0.nupkg.sha512",
+    "C:\\Users\\alexa\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\system.collections.concurrent\\4.3.0\\system.collections.concurrent.4.3.0.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
