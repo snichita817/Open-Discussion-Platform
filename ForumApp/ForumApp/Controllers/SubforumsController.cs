@@ -53,7 +53,7 @@ namespace ForumApp.Controllers
         {
             Subforum subforum = new Subforum();
             Forum f = db.Forums.Find(id);
-            //Models.Section s = db.Sections.Find(f.SectionId);
+            Models.Section s = db.Sections.Find(f.SectionId);
             if (f == null)
             {
                 return HttpNotFound();
@@ -63,11 +63,8 @@ namespace ForumApp.Controllers
                 return HttpNotFound();
             }*/
             subforum.ForumId = id;
-            //ViewBag.sectionId = f.SectionId;
-            //ViewBag.sectionName = s.SectionName;
             ViewBag.forumId = f.Id;
             ViewBag.forumName = f.ForumName;
-            //subforum.SectionId = f.SectionId;
 
 
             subforum.AccessLevel = GetAllCategories();

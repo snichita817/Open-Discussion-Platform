@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 
@@ -69,10 +70,30 @@ namespace ForumApp.Controllers
         // se afiseaza detaliat o singura sectiune
         // impreuna cu forumurile pe care le include
         [Authorize(Roles = "User,Editor,Admin")]
-        public IActionResult Show(int id)
+        public IActionResult Show(int id, int? showOrder)
         {
+
             Section section = db.Sections.Include("Forums")
-                                .Where(sec => sec.Id == id).First();
+                                .Where(sec => sec.Id == id)
+                                .First();
+            if (showOrder == null)
+            {
+                showOrder = 0;
+            }
+            ViewBag.showOrder = showOrder;
+
+            switch (showOrder)
+            {
+                case 1:
+                    section.Forums = (ICollection<Forum>?)section.Forums.OrderByDescending(f => f.ForumName).ToList();
+                    break;
+                case 2:
+                    section.Forums = (ICollection<Forum>?)section.Forums.OrderByDescending(f => f.MsgCount).ToList();
+                    break;
+                default:
+                    section.Forums = (ICollection<Forum>?)section.Forums.OrderBy(f => f.ForumName).ToList();
+                    break;
+            }
 
             SetAccessRights();                      // setam accesul pt userul curent care acceseaza vier
 

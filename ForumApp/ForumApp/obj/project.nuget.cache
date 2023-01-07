@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "gQL778Ag+qOU4+qIyRcXXSgzlnrEUZDY5D3sfh0cOXp211X7tTIh2VmhLfspTxZ9t1X3qizngnIwWQFSnKC7Hg==",
+  "dgSpecHash": "QKiVq7j+JRqTouUwSYeO8hRGJaoqQXEVW5zN4Lx7ByANVfJl/SLhewpkX9Ny2wrR3Lt6VSnzkyrql8bf5+fi5A==",
   "success": true,
   "projectFilePath": "C:\\Users\\snich\\source\\repos\\Proiect-.NET-Sem-1-An-2-\\ForumApp\\ForumApp\\ForumApp.csproj",
   "expectedPackageFiles": [
@@ -88,6 +88,7 @@
     "C:\\Users\\snich\\.nuget\\packages\\nuget.projectmodel\\6.3.1\\nuget.projectmodel.6.3.1.nupkg.sha512",
     "C:\\Users\\snich\\.nuget\\packages\\nuget.protocol\\6.3.1\\nuget.protocol.6.3.1.nupkg.sha512",
     "C:\\Users\\snich\\.nuget\\packages\\nuget.versioning\\6.3.1\\nuget.versioning.6.3.1.nupkg.sha512",
+    "C:\\Users\\snich\\.nuget\\packages\\popper.js\\1.16.1\\popper.js.1.16.1.nupkg.sha512",
     "C:\\Users\\snich\\.nuget\\packages\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\snich\\.nuget\\packages\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\snich\\.nuget\\packages\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
