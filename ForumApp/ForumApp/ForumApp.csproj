@@ -25,4 +25,8 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\Content\Images\Eye.jpeg" />
+  </ItemGroup>
+
 </Project>
