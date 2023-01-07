@@ -31,7 +31,7 @@
                 @Html.Label("PostContent", "Description of the Subforum")
                 ;
                 <br />
-                @Html.TextBox("PostContent", @Model.PostContent, new { @class = "form-control" })
+                @Html.TextArea("PostContent", null, new { @class = "summernote" })
                 ;
                 <br />
                 <br />
