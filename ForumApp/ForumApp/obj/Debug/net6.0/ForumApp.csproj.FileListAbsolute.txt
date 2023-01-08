@@ -616,3 +616,6 @@ D:\Teme\Informatica\Github\Proiect-.NET-Sem-1-An-2-\ForumApp\ForumApp\obj\Debug\
 D:\Teme\Informatica\Github\Proiect-.NET-Sem-1-An-2-\ForumApp\ForumApp\obj\Debug\net6.0\ForumApp.pdb
 D:\Teme\Informatica\Github\Proiect-.NET-Sem-1-An-2-\ForumApp\ForumApp\obj\Debug\net6.0\ForumApp.genruntimeconfig.cache
 D:\Teme\Informatica\Github\Proiect-.NET-Sem-1-An-2-\ForumApp\ForumApp\obj\Debug\net6.0\ref\ForumApp.dll
+C:\Users\snich\source\repos\Proiect-.NET-Sem-1-An-2-\ForumApp\ForumApp\bin\Debug\net6.0\AngleSharp.dll
+C:\Users\snich\source\repos\Proiect-.NET-Sem-1-An-2-\ForumApp\ForumApp\bin\Debug\net6.0\AngleSharp.Css.dll
+C:\Users\snich\source\repos\Proiect-.NET-Sem-1-An-2-\ForumApp\ForumApp\bin\Debug\net6.0\HtmlSanitizer.dll
