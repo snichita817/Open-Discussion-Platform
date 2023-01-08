@@ -1,12 +1,6 @@
 ﻿@model ForumApp.Models.Subforum
 @using System.Web;
 
-<style>
-    .note-editor .dropdown-toggle::after {
-        display: none;
-    }
-</style>
-
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -43,6 +37,7 @@
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">Posts</h5>
+        <a class="btn btn-secondary btn-sm" href="/Posts/New/@Model.Id">Add Post</a>
         @foreach (var pos in Model.Posts)
         {
             <div class="card" style="width: 35rem;">
@@ -56,35 +51,3 @@
         }
     </div>
 </div>
-
-
-<br />
-<div class="container-mt5">
-    <div class="row">
-        <div class="col-6 offset-3">
-            @using (Html.BeginForm(method: FormMethod.Post, actionName: "Show", controllerName: "Subforums"))
-            {
-
-                @Html.Hidden("SubforumId", @Model.Id);
-
-                @Html.Label("PostTitle", "Title of your post")
-                ;
-                <br />
-                @Html.TextBox("PostTitle", null, new { @class = "form-control" })
-                ;
-
-                @Html.ValidationMessage("PostTitle", null, new { @class = "text-danger" })
-                ;
-                <br />
-                @Html.Label("PostContent", "Write your post here")
-                ;
-                <br />
-                @Html.TextArea("PostContent", null, new { @class = "summernote" })
-                ;
-                <br />
-                <button class="btn btn-sm btn-success" type="submit">Add new Post!</button>
-            }
-        </div>
-    </div>
-
-    @Html.ValidationSummary(false, "", new { @class = "text-danger" })

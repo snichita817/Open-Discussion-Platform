@@ -22,7 +22,7 @@
                 @Html.Label("PostTitle", "Edit the tite of the Post")
                 ;
                 <br />
-                @Html.TextBox("PostTitle", Model.PostTitle, new { @class = "form-control" })
+                @Html.TextBox("PostTitle", @Model.PostTitle, new { @class = "form-control" })
                 ;
 
                 @Html.ValidationMessage("PostTitle", null, new { @class = "text-danger" })
@@ -31,7 +31,7 @@
                 @Html.Label("PostContent", "Description of the Subforum")
                 ;
                 <br />
-                @Html.TextArea("PostContent", Model.PostContent, new { @class = "form-control summernote" })
+                @Html.TextArea("PostContent", null, new { @class = "summernote" })
                 ;
                 <br />
                 <br />
