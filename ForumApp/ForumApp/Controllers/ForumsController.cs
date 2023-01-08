@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using static System.Collections.Specialized.BitVector32;
 
 namespace ForumApp.Controllers
 {
@@ -27,7 +28,7 @@ namespace ForumApp.Controllers
         }
 
         [Authorize(Roles = "User,Editor,Admin")]
-        public IActionResult Show(int id)
+        public IActionResult Show(int id, int? showOrder)
         {
             /*
              * Titlu forum
@@ -38,6 +39,32 @@ namespace ForumApp.Controllers
             Forum forum = db.Forums.Include("Section").Include("Subforums").Include("User")
                             .Where(foru => foru.Id == id)
                             .First();
+
+            if(showOrder == null)
+            {
+                showOrder = 0;
+            }
+            ViewBag.showOrder = showOrder;
+
+            switch (showOrder)
+            {
+                case 1:
+                    forum.Subforums = (ICollection<Subforum>?)forum.Subforums.OrderBy(sf => sf.CreationDate).ToList();
+                    break;
+                case 2:
+                    forum.Subforums = (ICollection<Subforum>?)forum.Subforums.OrderBy(sf => sf.SubforumName).ToList();
+                    break;
+                case 3:
+                    forum.Subforums = (ICollection<Subforum>?)forum.Subforums.OrderByDescending(sf => sf.SubforumName).ToList();
+                    break;
+                case 4:
+                    forum.Subforums = (ICollection<Subforum>?)forum.Subforums.OrderByDescending(sf => sf.MsgCount).ToList();
+                    break;
+                default:
+                    forum.Subforums = (ICollection<Subforum>?)forum.Subforums.OrderByDescending(sf => sf.CreationDate).ToList();
+                    break;
+            }
+
             SetAccessRights();
             return View(forum);
         }
@@ -73,7 +100,7 @@ namespace ForumApp.Controllers
         {
             forum.UserId = _userManager.GetUserId(User);        // preluam idul si il stocam in baza de date
             forum.Id = 0;
-            Section s = db.Sections.Find(forum.SectionId);
+            Models.Section s = db.Sections.Find(forum.SectionId);
             if (ModelState.IsValid)
             {
                 forum.Id = 0;                   // setam explicit valoarea Id-ului la 0, deoarece nsh dc din moment ce pasam Idul sectiunii se schimba ceva aici

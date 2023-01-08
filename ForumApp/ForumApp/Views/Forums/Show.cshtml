@@ -27,7 +27,57 @@
         }
     </div>
 </div>
+<br />
+<div class="dropdown">
 
+    <a href="#" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">Sort by</a>
+    <div class="dropdown-menu">
+        @if (ViewBag.showOrder == 0)
+        {
+            <a class="dropdown-item disabled" href="/Forums/Show/@Model.Id/0">Sort by newest first</a>
+        }
+        else
+        {
+            <a class="dropdown-item" href="/Forums/Show/@Model.Id/0">Sort by newest first</a>
+        }
+
+        @if (ViewBag.showOrder == 1)
+        {
+            <a class="dropdown-item disabled" href="/Forums/Show/@Model.Id/1">Sort by oldest first</a>
+        }
+        else
+        {
+            <a class="dropdown-item" href="/Forums/Show/@Model.Id/1">Sort by oldest first</a>
+        }
+
+        @if (ViewBag.showOrder == 2)
+        {
+            <a class="dropdown-item disabled" href="/Forums/Show/@Model.Id/2">Sort by name (A-Z)</a>
+        }
+        else
+        {
+            <a class="dropdown-item" href="/Forums/Show/@Model.Id/2">Sort by name (A-Z)</a>
+        }
+
+        @if (ViewBag.showOrder == 3)
+        {
+            <a class="dropdown-item disabled" href="/Forums/Show/@Model.Id/3">Sort by name (Z-A)</a>
+        }
+        else
+        {
+            <a class="dropdown-item" href="/Forums/Show/@Model.Id/3">Sort by name (Z-A)</a>
+        }
+
+        @if (ViewBag.showOrder == 4)
+        {
+            <a class="dropdown-item disabled" href="/Forums/Show/@Model.Id/4">Most popular first</a>
+        }
+        else
+        {
+            <a class="dropdown-item" href="/Forums/Show/@Model.Id/4">Most popular first</a>
+        }
+    </div>
+</div>
 
 <div class="card">
     <div class="card-body">

@@ -31,9 +31,34 @@
 </div>
 <br />
 
+<div class="dropdown">
 
-<br />
-<br />
+    <a href="#" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">Sort by</a>
+    <div class="dropdown-menu">
+        @if (ViewBag.showOrder == 0)
+        {
+            <a class="dropdown-item disabled" href="/Sections/Show/@Model.Id/0">Sort by name (A-Z)</a>
+        }
+        else {
+            <a class="dropdown-item" href="/Sections/Show/@Model.Id/0">Sort by name (A-Z)</a>
+        }
+        @if (ViewBag.showOrder == 1)
+        {
+            <a class="dropdown-item disabled" href="/Sections/Show/@Model.Id/1">Sort by name (Z-A)</a>
+        }
+        else {
+            <a class="dropdown-item" href="/Sections/Show/@Model.Id/1">Sort by name (Z-A)</a>
+        }
+        @if (ViewBag.showOrder == 2)
+        {
+            <a class="dropdown-item disabled" href="/Sections/Show/@Model.Id/2">Most popular first</a>
+        }
+        else{
+            <a class="dropdown-item" href="/Sections/Show/@Model.Id/2">Most popular first</a>
+        }
+    </div>
+</div>
+
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">Forums</h5>
