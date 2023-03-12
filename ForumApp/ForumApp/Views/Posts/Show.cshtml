@@ -1,35 +1,51 @@
 ﻿@model ForumApp.Models.Post
 @using System.Web;
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="/Sections/Index/">Sections</a></li>
-        <li class="breadcrumb-item"><a href="/Sections/Show/@ViewBag.sectionId">@ViewBag.sectionName</a></li>
-        <li class="breadcrumb-item"><a href="/Forums/Show/@ViewBag.ForumId">@ViewBag.forumName</a></li>
-        <li class="breadcrumb-item"><a href="/Suborums/Show/@ViewBag.SubforumId">@ViewBag.SubforumName</a></li>
-        <li class="breadcrumb-item active" aria-current="page">@Model.PostTitle</li>
-    </ol>
-</nav>
+<link rel="stylesheet" href="~/css/postShow.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
+
+@Html.Partial("_CoverPostPartial")
+
+<div class="container-forum">
+    <br />
+    <div class="sectionHeader">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/Home/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/Sections/Index/">Sections</a></li>
+                <li class="breadcrumb-item"><a href="/Sections/Show/@ViewBag.sectionId">@ViewBag.sectionName</a></li>
+                <li class="breadcrumb-item"><a href="/Forums/Show/@ViewBag.ForumId">@ViewBag.forumName</a></li>
+                <li class="breadcrumb-item"><a href="/Subforums/Show/@ViewBag.SubforumId">@ViewBag.SubforumName</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.PostTitle</li>
+            </ol>
+        </nav>
+        <div class="buttons">
+            @if (ViewBag.UserCurent == Model.UserId || ViewBag.EsteAdmin || ViewBag.EsteEditor)
+            {
+                <a class="btn " href="/Posts/Edit/@Model.Id">Editeaza postarea</a>
+                <form method="post" action="/Posts/Delete/@Model.Id">
+                    <button class="btn" type="submit">Sterge postarea</button>
+                </form>
+            }
+        </div>
+
+    </div>
+</div>
+
 
 <div class="card">
     <div class="card-body">
 
-        @if (ViewBag.UserCurent == Model.UserId || ViewBag.EsteAdmin || ViewBag.EsteEditor)
-        {
-            <a class="btn btn-outline-success" href="/Posts/Edit/@Model.Id">Edit post</a>
-            <form method="post" action="/Posts/Delete/@Model.Id">
-                <button class="btn btn-danger" type="submit">Delete post</button>
-            </form>
-        }
-        
 
         <div class="card" style="width: 35rem;">
             <div class="card-body">
-                <h5 class="card-title">@Model.PostTitle</h5>
+                <h5 style="font-size:25px" class="card-title">@Model.PostTitle</h5>
                 <small>@Model.PostDate</small>
-                @Html.Raw(HttpUtility.HtmlDecode(@Model.PostContent))
+                <p style="font-size: 14px">@Html.Raw(HttpUtility.HtmlDecode(@Model.PostContent))</p>
                 <small style="color:gray">Postat de: @Model.UserName</small>
             </div>
+        </div>
     </div>
 </div>

@@ -1,9 +1,31 @@
 ﻿@model ForumApp.Models.Section
 @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
+
+<style>
+    body {
+        background-color: #fef6ec;
+        font-family: 'Noto Serif', serif;
+        color: #3f3d3d;
+    }
+
+
+    .row .btn {
+        outline-color: black;
+        background-color: #3f3d3d;
+        color: #fef6ec;
+    }
+
+        .row .btn:hover {
+            background-color: #c7c1b9;
+            color: #3f3d3d;
+        }
+</style>
+
+
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Home/">Home</a></li>
         <li class="breadcrumb-item"><a href="/Sections/Index/">Sections</a></li>
         <li class="breadcrumb-item active" aria-current="page">Create Section</li>
     </ol>

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 
@@ -72,15 +71,45 @@ namespace ForumApp.Controllers
         [Authorize(Roles = "User,Editor,Admin")]
         public IActionResult Show(int id, int? showOrder)
         {
-
             Section section = db.Sections.Include("Forums")
-                                .Where(sec => sec.Id == id)
-                                .First();
+                               .Where(sec => sec.Id == id)
+                               .First();
             if (showOrder == null)
             {
                 showOrder = 0;
             }
             ViewBag.showOrder = showOrder;
+
+            var search = "";
+
+            if (Convert.ToString(HttpContext.Request.Query["search"]) != null)
+            {
+                // eliminam spatiile libere
+                search =
+                    Convert.ToString(HttpContext.Request.Query["search"]).Trim();
+
+                // cautare in Forum 
+                List<int> forumIds = db.Forums.Where
+                    (
+                        f => f.ForumName.Contains(search)
+                          || f.ForumDescription.Contains(search)
+                    ).Select(a => a.Id).ToList();
+
+                // cautare in subforums -> se returneaza tot o lista cu idurile forumurilor
+                List<int> forumIdsOfSubforumsWithSearchString = db.Subforums.Where
+                    (
+                        sf => sf.SubforumName.Contains(search)
+                           || sf.SubforumDesc.Contains(search)
+                    ).Select(a => (int)a.ForumId).ToList();
+
+                // formam o singura lista cu toate id-urile selectate mai sus
+                List<int> mergeIds = forumIds.Union(forumIdsOfSubforumsWithSearchString).ToList();
+                
+                // practic aici schimba lista default cu forumurile noastre in lista cu forumurile a caror Id-uri sunt in lista mergeuita cu Id-urile    
+                section.Forums = (ICollection<Forum>?)section.Forums.Where(f => mergeIds.Contains(f.Id)).ToList();
+            }
+
+            ViewBag.SearchString = search;
 
             switch (showOrder)
             {

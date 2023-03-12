@@ -1,4 +1,25 @@
 ﻿
+<style>
+    body {
+        background-color: #fef6ec;
+        font-family: 'Noto Serif', serif;
+        color: #3f3d3d;
+        font-size:16px;
+    }
+
+
+    .row .btn {
+        outline-color: black;
+        background-color: #3f3d3d;
+        color: #fef6ec;
+    }
+
+    .row .btn:hover {
+        background-color: #c7c1b9;
+        color: #3f3d3d;
+    }
+</style>
+
 <br />
 <br />
 
@@ -14,7 +35,7 @@
 
                         <p><i class="bi bi-envelope"></i> Email utilizator: @user.Email</p>
 
-@*
+
                         @if (@user.FirstName != null)
                         {
                             <p><i class="bi bi-person"> </i> Nume utilizator: @user.FirstName</p>
@@ -30,14 +51,14 @@
                         @if (@user.PhoneNumber != null)
                         {
                             <p><i class="bi bi-phone"></i> Telefon utilizator: @user.PhoneNumber</p>
-                        }*@
+                        }
 
                     </div>
                     <div class="d-flex flex-row justify-content-between p-3">
 
-                        <div> <a class="btn btn-sm btn-success" href="/Users/Edit/@user.Id"> Editare utilizator</a> </div>
+                        <div> <a class="btn btn-sm" href="/Users/Edit/@user.Id"> Editare utilizator</a> </div>
 
-                        <div> <a class="btn btn-sm btn-success" href="/Users/Show/@user.Id"> Vizualizare utilizator</a> </div>
+                        <div> <a class="btn btn-sm" href="/Users/Show/@user.Id"> Vizualizare utilizator</a> </div>
 
                     </div>
                 </div>

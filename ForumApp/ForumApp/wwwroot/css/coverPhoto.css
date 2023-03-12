@@ -1,0 +1,13 @@
+﻿.forest {
+    z-index: 100;
+    width: 100vw;
+    object-fit: contain;
+}
+
+@media only screen and (min-width: 1000px) {
+    .forest {
+        width: 100%;
+        object-fit: cover;
+        height: 320px;
+    }
+}

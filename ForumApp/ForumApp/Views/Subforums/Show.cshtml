@@ -1,53 +1,104 @@
 ﻿@model ForumApp.Models.Subforum
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
 @using System.Web;
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="/Sections/Index/">Sections</a></li>
-        <li class="breadcrumb-item"><a href="/Forums/Show/@Model.Forum.Id">@Model.Forum.ForumName</a></li>
-        @*<li class="breadcrumb-item"><a href="/Forums/Show/@Model.Section.Id">@Model.Section.SectionName</a></li>*@
-        <li class="breadcrumb-item active" aria-current="page">@Model.SubforumName</li>
-    </ol>
-</nav>
+<style>
+    .note-editor .dropdown-toggle::after {
+        display: none;
+    }
+</style>
 
-<div class="card">
-    <div class="card-body">
-        <h4 class="card-title">@Model.SubforumName</h4>
-        <h5>@Model.SubforumDesc</h5>
+<link rel="stylesheet" href="~/css/subforums.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
 
-        @* Subforumul poate fi editat/sters de userul care l-a creat, creatorul forumului, editor, admin *@
-        @if (ViewBag.EsteAdmin == true || ViewBag.EsteEditor == true || ViewBag.userForumCreator == ViewBag.UserCurent || ViewBag.UserCurent == Model.UserId)
-        {
-            <a class="btn btn-outline-success" href="/Subforums/Edit/@Model.Id">Edit Subforum</a>
-        
-            <form method="post" action="/Subforums/Delete/@Model.Id">
-                <button class="btn btn-danger" type="submit">Delete Subforum</button>
-            </form>
-        }
-        
-    </div>
-</div>
-<br />
+@Html.Partial("_CoverPostPartial")
 
+<div class="all">
+    <div class="container-forum">
+        <br />
+        <div class="sectionHeader">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Home/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/Sections/Index/">Sections</a></li>
+                    <li class="breadcrumb-item"><a href="/Forums/Show/@Model.Forum.Id">@Model.Forum.ForumName</a></li>
+ @*                   <li class="breadcrumb-item"><a href="/Forums/Show/@Model.Section.Id">@Model.Section.SectionName</a></li>*@
+                    <li class="breadcrumb-item active" aria-current="page">@Model.SubforumName</li>
+                </ol>
+            </nav>
 
-<br />
-<br />
+            <h3 class="titluSectiune">@Model.SubforumName</h3>
+            <p style="font-size: 25px;" class="descriere"> Acesta este o discutie despre: @Model.SubforumDesc</p>
 
-<div class="card">
-    <div class="card-body">
-        <h5 class="card-title">Posts</h5>
-        <a class="btn btn-secondary btn-sm" href="/Posts/New/@Model.Id">Add Post</a>
-        @foreach (var pos in Model.Posts)
-        {
-            <div class="card" style="width: 35rem;">
-                <div class="card-body">
-                    <h5 class="card-title"><a style="text-decoration:none; color:black" href="/Posts/Show/@pos.Id">@pos.PostTitle</a></h5>
-                    <small>@pos.PostDate</small>
-                    @Html.Raw(HttpUtility.HtmlDecode(@pos.PostContent))
-                    <small style="color:gray">Postat de: @pos.UserName</small>
-                </div>
+            <div class="buttons">
+                @* Subforumul poate fi editat/sters de userul care l-a creat, creatorul forumului, editor, admin *@
+                @if (ViewBag.EsteAdmin == true || ViewBag.EsteEditor == true || ViewBag.userForumCreator == ViewBag.UserCurent || ViewBag.UserCurent == Model.UserId)
+                {
+                    <a class="btn" href="/Subforums/Edit/@Model.Id">Edit Subforum</a>
+
+                    <form method="post" action="/Subforums/Delete/@Model.Id">
+                        <button class="btn" type="submit">Delete Subforum</button>
+                    </form>
+                }
             </div>
-        }
+        </div>
     </div>
+
+    <br />
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Posts</h5>
+            @foreach (var pos in Model.Posts)
+            {
+                <div class="card" style="width: 35rem;">
+                    <div class="card-body">
+                        <h5 style="font-size: 25px" class="card-title"><a style="text-decoration:none; color:black" href="/Posts/Show/@pos.Id">@pos.PostTitle</a></h5>
+                        <small>@pos.PostDate</small>
+                        <p style="font-size: 14px">@Html.Raw(HttpUtility.HtmlDecode(@pos.PostContent))</p>
+                        <small style="color:gray">Postat de: <a href="/Users/Show/@pos.UserId">@pos.UserName</a></small>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+
+
+    <br />
+    <div class="container-mt5">
+        <div class="row">
+            <div class="col-6 offset-3">
+                @using (Html.BeginForm(method: FormMethod.Post, actionName: "Show", controllerName: "Subforums"))
+                {
+
+                    @Html.Hidden("SubforumId", @Model.Id)
+                    ;
+
+                    @Html.Label("PostTitle", "Title of your post")
+                    ;
+                    <br />
+                    @Html.TextBox("PostTitle", null, new { @class = "form-control" })
+                    ;
+
+                    @Html.ValidationMessage("PostTitle", null, new { @class = "text-danger" })
+                    ;
+                    <br />
+                    @Html.Label("PostContent", "Write your post here")
+                    ;
+                    <br />
+                    @Html.TextArea("PostContent", null, new { @class = "summernote" })
+                    ;
+                    @Html.ValidationMessage("PostContent", null, new { @class = "text-danger" })
+                    <br />
+                    <button class="btn btn-sm" type="submit">Add new Post!</button>
+                }
+            </div>
+        </div>
+    </div>
+
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
 </div>
+

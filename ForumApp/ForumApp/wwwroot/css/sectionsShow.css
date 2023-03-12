@@ -1,0 +1,80 @@
+﻿.container-forum {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.forum-grid {
+    display: flex;
+    flex-direction: column;
+    background-color: #fef6ec;
+}
+
+body {
+    background-color: #fef6ec;
+    font-family: 'Noto Serif', serif;
+    color: #3f3d3d;
+}
+
+.card {
+    background-color: #fef6ec;
+}
+
+.sectionHeader {
+    background-color: #fef6ec;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+h1, h2, h3, h4, h5 {
+    margin: 0;
+}
+
+.container-forum .btn {
+    outline-color: black;
+    background-color: #3f3d3d;
+    color: #fef6ec;
+}
+
+.container-forum .btn:hover {
+    background-color: #c7c1b9;
+    color: #3f3d3d;
+}
+
+button {
+    outline-color: black;
+    background-color: #3f3d3d;
+    color: #fef6ec;
+}
+
+button:hover {
+    background-color: #c7c1b9;
+    color: #3f3d3d;
+}
+
+.titluSectiune {
+    background-image: linear-gradient(to bottom left, #ab1e20, #3f3d3d);
+    text-align: left;
+    font-size: 40px;
+    border-radius: 6px;
+    color: #fef6ec;
+    text-align: center;
+}
+
+.titluSectiune > a {
+    padding-left: 5px;
+}
+
+.buttons{
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+}
+.dropdown{
+    margin-left: auto;
+}
+
+.titlu {
+    text-align: left;
+    font-size: 25px;
+    border-radius: 6px;
+}

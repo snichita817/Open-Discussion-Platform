@@ -1,38 +1,59 @@
 ﻿@model ForumApp.Models.ApplicationUser
 
+<link rel="stylesheet" href="~/css/userShow.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet"> 
 
-<div class="card mt-3" style="height:100%; width: 100%;">
+<div class="container-profil">
+    <div class="card mt-3" style="height:100%; width: 100%;">
 
-    <div class="card-body d-flex justify-content-between flex-column">
-        <div>
-            <p><i class="bi bi-person"> </i> UserName: @Model.UserName</p>
+        <div class="card-body d-flex justify-content-between flex-column">
+            <div>
+                <p><i class="bi bi-person"> </i><em>User name: </em>@Model.UserName</p>
 
-            <p><i class="bi bi-envelope"></i> Email utilizator: @Model.Email</p>
+                <p><i class="bi bi-envelope"></i><em>Email utilizator: </em> @Model.Email</p>
 
-            @if (ViewBag.Roles.Count > 0)
-            {
-                <p><i class="bi bi-person"> </i> Roluri utilizator:</p>
-                @foreach (var role in ViewBag.Roles)
+                @if(Model.PhoneNumber != null)
                 {
-                    <span class="rounded-pill bg-dark mr-2 px-4 py-2 text-white">@role</span>
+                    <p><i class="bi bi-envelope"></i><em>Nr Telefon: </em> @Model.PhoneNumber</p>
                 }
-            }
 
-
-
-        </div>
-
-        <div class="d-flex flex-row justify-content-between p-3">
-
-            @if ((string)Model.Id != ViewBag.UserCurent)
-            {
-                @using (Html.BeginForm(actionName: "Delete", controllerName: "Users", method: FormMethod.Post, routeValues: new { id = @Model.Id }))
+                @if(Model.FirstName != null)
                 {
-
-                    <button class="btn btn-danger" type="submit">Sterge utilizator</button>
+                    <p><i class="bi bi-envelope"></i><em>Nume: </em> @Model.FirstName</p>
+                }
+                
+                @if(Model.LastName != null)
+                {
+                    <p><i class="bi bi-envelope"></i><em>Prenume: </em> @Model.LastName</p>
 
                 }
-            }
+
+                @if (ViewBag.Roles.Count > 0)
+                {
+                    <p><i class="bi bi-person"> </i> Roluri utilizator:</p>
+                    @foreach (var role in ViewBag.Roles)
+                    {
+                        <span class="rounded-pill bg-light mr-2 px-4 py-2 text-black">@role</span>
+                    }
+                }
+
+            </div>
+
+            <div class="d-flex flex-row justify-content-between p-3">
+
+                @if (((string)Model.Id != ViewBag.UserCurent && User.IsInRole("Admin")) || (((string)Model.Id == ViewBag.UserCurent && User.IsInRole("Admin") == false)))
+                {
+                    @using (Html.BeginForm(actionName: "Delete", controllerName: "Users", method: FormMethod.Post, routeValues: new { id = @Model.Id }))
+                    {
+
+                        <button class="btn btn-danger" type="submit">Sterge utilizator</button>
+
+                    }
+                }
+            </div>
         </div>
     </div>
 </div>
+

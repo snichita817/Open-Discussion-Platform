@@ -50,16 +50,15 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Sections}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "sortareForum",
     pattern: "{controller=Sections}/{action=Show}/{id}/{showOrder?}");
 
-/*app.MapControllerRoute(
+app.MapControllerRoute(
     name: "sortareSubforum",
-    pattern: "{controller=Forums}/{action=Show}/{id}/{showOrder?}");*/
-
-app.MapRazorPages();
+    pattern: "{controller=Forums}/{action=Show}/{id}/{showOrder?}");
 
 app.Run();

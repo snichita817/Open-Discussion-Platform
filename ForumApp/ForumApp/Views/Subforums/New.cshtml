@@ -1,8 +1,31 @@
 ﻿@model ForumApp.Models.Subforum
 
+
+
+<style>
+    body {
+        background-color: #fef6ec;
+        font-family: 'Noto Serif', serif;
+        color: #3f3d3d;
+    }
+
+
+    .row .btn {
+        outline-color: black;
+        background-color: #3f3d3d;
+        color: #fef6ec;
+    }
+
+        .row .btn:hover {
+            background-color: #c7c1b9;
+            color: #3f3d3d;
+        }
+</style>
+
+
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Home/">Home</a></li>
         <li class="breadcrumb-item"><a href="/Sections/Index/">Sections</a></li>
         <li class="breadcrumb-item"><a href="/Sections/Show/@ViewBag.sectionId">@ViewBag.sectionName</a></li>
         <li class="breadcrumb-item"><a href="/Forums/Show/@Model.ForumId">@ViewBag.forumName</a></li>
@@ -31,9 +54,12 @@
                 @Html.TextBox("SubforumDesc", null, new { @class = "form-control" })
                 ;
                 <br />
+                @if (User.IsInRole("Admin"))
+                {
                 @Html.DropDownListFor(m => m.SubforumType,
                             new SelectList(Model.AccessLevel, "Value", "Text"), "Select access level",
                             new { @class = "form-control" })
+                }
                 <br />
                 <button class="btn btn-sm btn-success" type="submit">Add new subforum!</button>
             }

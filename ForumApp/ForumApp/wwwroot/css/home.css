@@ -1,0 +1,57 @@
+﻿.flex-container{
+    display: grid;
+}
+
+.moonMan {
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    margin-top: 10vh;
+    order: 2;
+    height: 60vh;
+    margin-left: 10vw;
+}
+
+body {
+    background-color: #fef6ec;
+}
+
+.titlu {
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    font-size: 3vw;
+    color: #3f3d3d;
+    margin-left: 60px;
+    margin-top: 15vh;
+    font-family: 'Noto Serif', serif;
+}
+
+
+
+a {
+    color: #3f3d3d;
+    text-decoration: none;
+
+}
+
+a:hover {
+    color: #3f3d3d;
+    text-decoration: underline;
+}
+
+.buton-wrapper {
+    line-height: 1em;
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 2;
+    grid-row-end: 2;
+    color: #3f3d3d;
+    font-family: 'Noto Serif', serif;
+    font-size: 2vw;
+    text-decoration: underline;
+    margin-left: 60px;
+
+}

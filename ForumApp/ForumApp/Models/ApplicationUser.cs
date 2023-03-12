@@ -12,8 +12,11 @@ namespace ForumApp.Models
         public virtual ICollection<Post>? Posts { get; set; }
 
         public string? FirstName { get; set; }
+
         public string? LastName { get; set; }
+
         [NotMapped]
         public IEnumerable<SelectListItem>? AllRoles { get; set; }
+
     }
 }

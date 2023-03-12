@@ -1,0 +1,33 @@
+﻿body {
+    background-color: #F2EAE4;
+    font-family: 'Noto Serif', serif;
+}
+
+.form-container {
+    margin: 40px;
+    border: 1px solid brown;
+    border-radius: 5px;
+    background-color: #262523;
+    color: white;
+}
+
+form{
+    padding: 10px;
+}
+
+.rol{
+    width: 300px;
+}
+
+.btn {
+    outline-color: black;
+    background-color: #3f3d3d;
+    background-color: #c7c1b9;
+    color: #3f3d3d;
+}
+
+    .btn:hover {
+        outline-color: black;
+        background-color: #3f3d3d;
+        color: #fef6ec;
+    }

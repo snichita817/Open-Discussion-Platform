@@ -1,102 +1,141 @@
 ﻿@model ForumApp.Models.Forum
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="/Sections/Index/">Sections</a></li>
-        <li class="breadcrumb-item"><a href="/Sections/Show/@Model.SectionId">@Model.Section.SectionName</a></li>
-        <li class="breadcrumb-item active" aria-current="page">@Model.ForumName</li>
-    </ol>
-</nav>
 
-@*<partial name="ForumInfo"></partial>*@
-<div class="card">
-    <div class="card-body">
-        <h5 class="card-title">@Model.ForumName</h5>
-        <p class="card-text">@Model.ForumDescription</p>
-        @if (Model.UserId == ViewBag.UserCurent || ViewBag.IsAdminn == true || ViewBag.IsEditor == true)                            @* butonul de EDIT poate fi accesat de ADMIN, EDITOR *@
-        {
-            <a class="btn btn-outline-success" href="/Forums/Edit/@Model.Id">Edit forum details</a>
-        }
-       
-        @if (ViewBag.IsAdminn == true || Model.UserId == ViewBag.UserCurent)                                                        @* butonul de DELETE poate fi accesat de ADMIN, USER care l-a creat *@
-        {
-            <form method="post" action="/Forums/Delete/@Model.Id">
-                <button class="btn btn-danger" type="submit">Delete forum</button>
-            </form>
-        }
-    </div>
-</div>
-<br />
-<div class="dropdown">
+<link rel="stylesheet" href="~/css/forums.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
 
-    <a href="#" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">Sort by</a>
-    <div class="dropdown-menu">
-        @if (ViewBag.showOrder == 0)
-        {
-            <a class="dropdown-item disabled" href="/Forums/Show/@Model.Id/0">Sort by newest first</a>
-        }
-        else
-        {
-            <a class="dropdown-item" href="/Forums/Show/@Model.Id/0">Sort by newest first</a>
-        }
+@Html.Partial("_CoverPhotoPartial")
 
-        @if (ViewBag.showOrder == 1)
-        {
-            <a class="dropdown-item disabled" href="/Forums/Show/@Model.Id/1">Sort by oldest first</a>
-        }
-        else
-        {
-            <a class="dropdown-item" href="/Forums/Show/@Model.Id/1">Sort by oldest first</a>
-        }
 
-        @if (ViewBag.showOrder == 2)
-        {
-            <a class="dropdown-item disabled" href="/Forums/Show/@Model.Id/2">Sort by name (A-Z)</a>
-        }
-        else
-        {
-            <a class="dropdown-item" href="/Forums/Show/@Model.Id/2">Sort by name (A-Z)</a>
-        }
+<div class="container-forum">
+    <br />
+    <div class="sectionHeader">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/Home/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/Sections/Index/">Topic-uri</a></li>
+                <li class="breadcrumb-item"><a href="/Sections/Show/@Model.SectionId">@Model.Section.SectionName</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.ForumName</li>
+            </ol>
+        </nav>
 
-        @if (ViewBag.showOrder == 3)
-        {
-            <a class="dropdown-item disabled" href="/Forums/Show/@Model.Id/3">Sort by name (Z-A)</a>
-        }
-        else
-        {
-            <a class="dropdown-item" href="/Forums/Show/@Model.Id/3">Sort by name (Z-A)</a>
-        }
+        <h3 class="card-title titluSectiune">@Model.ForumName</h3>
+        <p style="font-size: 25px;" class="card-text">Aceasta sectiune este despre: @Model.ForumDescription</p>
 
-        @if (ViewBag.showOrder == 4)
-        {
-            <a class="dropdown-item disabled" href="/Forums/Show/@Model.Id/4">Most popular first</a>
-        }
-        else
-        {
-            <a class="dropdown-item" href="/Forums/Show/@Model.Id/4">Most popular first</a>
-        }
-    </div>
-</div>
+        <div class="buttons">
+            @if (Model.UserId == ViewBag.UserCurent || ViewBag.IsAdminn == true || ViewBag.IsEditor == true)                            @* butonul de EDIT poate fi accesat de ADMIN, EDITOR *@
+            {
+                <a class="btn " href="/Forums/Edit/@Model.Id">Editeaza subiectul de discutie</a>
+            }
 
-<div class="card">
-    <div class="card-body">
-    <a class="btn btn-secondary btn-sm" href="/Subforums/New/@Model.Id">Add Subforum</a>
-    @foreach(var subf in Model.Subforums)
-    {
-        @if(subf.SubforumType == 0)                                                         // daca subforumul este public se afiseaza
-        {
-            <div class="card" style="width: 35rem;">
-                <div class="card-body">
-                    <h5 class="card-title"><a style="text-decoration:none; color:black" href="/Subforums/Show/@subf.Id">@subf.SubforumName</a></h5>
-                    <p>@subf.MsgCount replies</p>
-                    <small style="color:gray">@subf.ViewCount views</small><br/>
+            @if (ViewBag.IsAdminn == true || Model.UserId == ViewBag.UserCurent)                                                        @* butonul de DELETE poate fi accesat de ADMIN, USER care l-a creat *@
+            {
+                <form method="post" action="/Forums/Delete/@Model.Id">
+                    <button class="btn " type="submit">Sterge subiectul de discutie</button>
+                </form>
+            }
 
-                    <small style="color:gray">Created on @subf.CreationDate</small>
+            <div class="dropdown">
+
+                <a href="#" class="btn dropdown-toggle" data-bs-toggle="dropdown">Sorteaza dupa</a>
+                <div class="dropdown-menu">
+                    @if (ViewBag.showOrder == 0)
+                    {
+                        <a class="dropdown-item disabled" href="/Forums/Show/@Model.Id/0">Sort by newest first</a>
+                    }
+                    else
+                    {
+                        <a class="dropdown-item" href="/Forums/Show/@Model.Id/0">Sort by newest first</a>
+                    }
+
+                    @if (ViewBag.showOrder == 1)
+                    {
+                        <a class="dropdown-item disabled" href="/Forums/Show/@Model.Id/1">Sort by oldest first</a>
+                    }
+                    else
+                    {
+                        <a class="dropdown-item" href="/Forums/Show/@Model.Id/1">Sort by oldest first</a>
+                    }
+
+                    @if (ViewBag.showOrder == 2)
+                    {
+                        <a class="dropdown-item disabled" href="/Forums/Show/@Model.Id/2">Sort by name (A-Z)</a>
+                    }
+                    else
+                    {
+                        <a class="dropdown-item" href="/Forums/Show/@Model.Id/2">Sort by name (A-Z)</a>
+                    }
+
+                    @if (ViewBag.showOrder == 3)
+                    {
+                        <a class="dropdown-item disabled" href="/Forums/Show/@Model.Id/3">Sort by name (Z-A)</a>
+                    }
+                    else
+                    {
+                        <a class="dropdown-item" href="/Forums/Show/@Model.Id/3">Sort by name (Z-A)</a>
+                    }
+
+                    @if (ViewBag.showOrder == 4)
+                    {
+                        <a class="dropdown-item disabled" href="/Forums/Show/@Model.Id/4">Most popular first</a>
+                    }
+                    else
+                    {
+                        <a class="dropdown-item" href="/Forums/Show/@Model.Id/4">Most popular first</a>
+                    }
                 </div>
             </div>
-        }
-        
-    }
+        </div>
     </div>
+    <br />
+
+
+    <div class="card">
+        <div class="card-body">
+            <a class="btn btn-sm creare" href="/Subforums/New/@Model.Id">Initiaza o discutie</a>
+            @foreach (var subf in @Model.Subforums)
+            {
+                @if (subf.SubforumType == 0)                                                         // daca subforumul este public se afiseaza
+                {
+                    <div class="card" style="width: 35rem;">
+                        <div class="card-body">
+                            <h5 style="font-size: 25px" class="card-title"><a style="text-decoration:none; color:black" href="/Subforums/Show/@subf.Id">@subf.SubforumName</a></h5>
+                            <p style="font-size: 14px">@subf.MsgCount replies</p>
+                            <small style="color:gray">@subf.ViewCount views</small><br />
+                            <small style="color:gray">Postat de: <a href="/Users/Show/@subf.UserId">@ViewBag.userName</a></small>
+                            <small style="color:gray">Creat in data de @subf.CreationDate</small>
+                        </div>
+                    </div>
+                }
+
+            }
+        </div>
+    </div>
+
+    @if (User.IsInRole("Admin"))
+    {
+
+        <hr style="height:3px; color: red" />
+        <p>Pentru ca esti admin poti vedea subiectele de discutie private</p>
+
+        @foreach (var subf in @Model.Subforums)
+        {
+            @if (subf.SubforumType == 1)                                                         // daca subforumul este privat se afiseaza
+            {
+                <div class="card" style="width: 35rem;">
+                    <div class="card-body">
+                        <h5 style="font-size: 25px" class="card-title"><a style="text-decoration:none; color:black" href="/Subforums/Show/@subf.Id">@subf.SubforumName</a></h5>
+                        <p style="font-size: 14px">@subf.MsgCount replies</p>
+                        <small style="color:gray">@subf.ViewCount views</small><br />
+
+                        <small style="color:gray">Created on @subf.CreationDate</small>
+                    </div>
+                </div>
+            }
+
+        }
+    }
 </div>
+

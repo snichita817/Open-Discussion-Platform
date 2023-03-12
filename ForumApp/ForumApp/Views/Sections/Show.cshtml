@@ -1,74 +1,122 @@
 ﻿@model ForumApp.Models.Section
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="/Sections/Index/">Sections</a></li>
-        <li class="breadcrumb-item active" aria-current="page">@Model.SectionName</li>
-    </ol>
-</nav>
+<link rel="stylesheet" href="~/css/sectionsShow.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
 
-<div class="card">
-    <div class="card-body">
-        <h4 class="card-title">@Model.SectionName</h4>
+@Html.Partial("_CoverPhotoPartial")
 
-        @if(ViewBag.EditareSectiuni == true)                @* Butonul de EDIT se va afisa doar pentru Admini si Editori *@
-        {
-            <a class="btn btn-outline-success" href="/Sections/Edit/@Model.Id">Edit section</a> @*trebuie mutat asta*@
-        }
-        
-        @* Buton pentru a adauga un forum nou in sectiunea in care ne aflam *@
-        <a class="btn btn-outline-success" href="/Forums/New/@Model.Id">Add new forum</a>
 
-        @if(ViewBag.AdaugareSectiuni == true)               @* Butonul de DELETE se va afisa doar pentru Admini *@
-        {
-            <form method="post" action="/Sections/Delete/@Model.Id">
-                <button class="btn btn-danger" type="submit">Delete section</button>
-            </form>
-        }
-        
-    </div>
-</div>
-<br />
+<div class="container-forum">
+    <br />
+    <div class="sectionHeader">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/Home/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/Sections/Index/">Topic-uri</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.SectionName</li>
+            </ol>
+        </nav>
 
-<div class="dropdown">
+        <h3 class="card-title titluSectiune">@Model.SectionName</h3>
+        <div class="buttons">
 
-    <a href="#" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">Sort by</a>
-    <div class="dropdown-menu">
-        @if (ViewBag.showOrder == 0)
-        {
-            <a class="dropdown-item disabled" href="/Sections/Show/@Model.Id/0">Sort by name (A-Z)</a>
-        }
-        else {
-            <a class="dropdown-item" href="/Sections/Show/@Model.Id/0">Sort by name (A-Z)</a>
-        }
-        @if (ViewBag.showOrder == 1)
-        {
-            <a class="dropdown-item disabled" href="/Sections/Show/@Model.Id/1">Sort by name (Z-A)</a>
-        }
-        else {
-            <a class="dropdown-item" href="/Sections/Show/@Model.Id/1">Sort by name (Z-A)</a>
-        }
-        @if (ViewBag.showOrder == 2)
-        {
-            <a class="dropdown-item disabled" href="/Sections/Show/@Model.Id/2">Most popular first</a>
-        }
-        else{
-            <a class="dropdown-item" href="/Sections/Show/@Model.Id/2">Most popular first</a>
-        }
-    </div>
-</div>
 
-<div class="card">
-    <div class="card-body">
-        <h5 class="card-title">Forums</h5>
-        <a class="btn btn-secondary btn-sm" href="/Forums/New/@Model.Id">Add Forum</a>
-        @foreach (ForumApp.Models.Forum forum in Model.Forums)
-        {
-            @if(forum.ForumType == 0)                               // daca forumul este public
+            @if (ViewBag.EditareSectiuni == true)                @* Butonul de EDIT se va afisa doar pentru Admini si Editori *@
             {
-                <partial name="ForumInfo" model="forum"></partial>
+                <a class="btn" href="/Sections/Edit/@Model.Id">Editeaza topicul</a>
+            }
+
+            @if (ViewBag.AdaugareSectiuni == true)               @* Butonul de DELETE se va afisa doar pentru Admini *@
+            {
+                <form method="post" action="/Sections/Delete/@Model.Id">
+                    <button class="btn" type="submit">Sterge topic-ul</button>
+                </form>
+            }
+
+            <div class="dropdown">
+
+                <a href="#" class="btn dropdown-toggle" data-bs-toggle="dropdown">Sorteaza subiectele de discutie</a>
+                <div class="dropdown-menu">
+                    @if (ViewBag.showOrder == 0)
+                    {
+                        <a class="dropdown-item disabled" href="/Sections/Show/@Model.Id/0">Sort by name (A-Z)</a>
+                    }
+                    else
+                    {
+                        <a class="dropdown-item" href="/Sections/Show/@Model.Id/0">Sort by name (A-Z)</a>
+                    }
+                    @if (ViewBag.showOrder == 1)
+                    {
+                        <a class="dropdown-item disabled" href="/Sections/Show/@Model.Id/1">Sort by name (Z-A)</a>
+                    }
+                    else
+                    {
+                        <a class="dropdown-item" href="/Sections/Show/@Model.Id/1">Sort by name (Z-A)</a>
+                    }
+                    @if (ViewBag.showOrder == 2)
+                    {
+                        <a class="dropdown-item disabled" href="/Sections/Show/@Model.Id/2">Most popular first</a>
+                    }
+                    else
+                    {
+                        <a class="dropdown-item" href="/Sections/Show/@Model.Id/2">Most popular first</a>
+                    }
+                </div>
+            </div>
+        </div>
+        <br />
+        <form method="GET">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control"
+                       placeholder="Cauta un anumit subiect de discutie sau o anumita conversatie" name="search"
+                       value="@ViewBag.SearchString">
+                <button class="btn"
+                        type="submit">
+                    Cauta
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <br />
+
+
+
+    <br />
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title titlu">Subiecte de discutie</h5>
+            @* Buton pentru a adauga un forum nou in sectiunea in care ne aflam *@
+            <a class="btn creare" href="/Forums/New/@Model.Id">Adauga un nou subiect de discutie</a>
+            @foreach (ForumApp.Models.Forum forum in Model.Forums)
+            {
+                @if (forum.ForumType == 0)                               // daca forumul este public
+                {
+                    <partial name="ForumInfo" model="forum"></partial>
+                }
+            }
+        </div>
+    </div>
+
+    <div class="privat">
+        @if (User.IsInRole("Admin"))
+        {
+
+            <hr style="height:3px; color: red" />
+            <p>Pentru ca esti admin poti vedea subiectele de discutie private</p>
+
+            @foreach (ForumApp.Models.Forum forum in Model.Forums)
+            {
+                @if (forum.ForumType == 1)                               // daca forumul este public
+                {
+                    <partial name="ForumInfo" model="forum"></partial>
+                }
             }
         }
     </div>
 </div>
+
+
+

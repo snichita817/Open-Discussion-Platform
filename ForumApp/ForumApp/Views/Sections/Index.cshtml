@@ -1,39 +1,81 @@
 ﻿@model Enum
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Sections</li>
-    </ol>
-</nav>
 
-<h2>Forums</h2>
+<link rel="stylesheet" href="~/css/sections.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
 
-@if (ViewBag.AdaugareSectiuni == true)     @* daca e true atunci este ADMIN *@
-{
-    <a class="btn btn-outline-success" href="/Sections/New/">Add new section</a> @*trebuie mutat asta*@
-}
-<a class="btn btn-outline-success" href="/Forums/New/">Add new forum</a>
+@Html.Partial("_CoverPhotoPartial")
 
-<br />
-<br />
-@foreach (var sect in ViewBag.Sections)
-{
-    @if(sect.SectionType == 0)                            // daca sectiunea este public
-    {
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title"><a style="text-decoration:none; color:black" href="/Sections/Show/@sect.Id">@sect.SectionName</a></h3>
+<div class="container-forum">
+    <br />
+    <div class="sectionHeader">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/Home/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Topic-uri</li>
+            </ol>
+        </nav>
+        <h1>Topic-uri</h1>
+        @if (User.IsInRole("Admin"))     @* daca e true atunci este ADMIN *@
+        {
+            <a class="btn" href="/Sections/New/">Creeaza o noua sectiune</a> @*trebuie mutat asta*@
+        }
+        <a class="btn" href="/Forums/New/">Creeaza un subiect de discutie nou </a>
+    </div>
+    <br />
 
-                @foreach (ForumApp.Models.Forum forum in sect.Forums)
+
+    <div class="forum-grid">
+        @foreach (var sect in ViewBag.Sections)
+        {
+            @if (sect.SectionType == 0)                            // daca sectiunea este public
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title titluSectiune"><a style="text-decoration:underline; color:#fef6ec;" href="/Sections/Show/@sect.Id">@sect.SectionName</a></h3>
+
+                        @foreach (ForumApp.Models.Forum forum in sect.Forums)
+                        {
+                            @if (forum.ForumType == 0)             // daca forumul este public
+                            {
+                                <partial name="ForumInfo" model="forum"></partial>
+                            }
+                        }
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    <div class="privat">
+        @if (User.IsInRole("Admin"))
+        {
+
+            <hr style="height:3px; color: red" />
+            <p>Pentru ca esti admin poti vedea subiectele de discutie private</p>
+
+            @foreach (var sect in ViewBag.Sections)
+            {
+                @if (sect.SectionType == 1)                            // daca sectiunea este privata
                 {
-                    @if(forum.ForumType == 0)             // daca forumul este public
-                    {
-                        <partial name="ForumInfo" model="forum"></partial>
-                    }
-                    
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title titluSectiune"><a style="text-decoration:underline; color:#fef6ec;" href="/Sections/Show/@sect.Id">@sect.SectionName</a></h3>
+
+                            @foreach (ForumApp.Models.Forum forum in sect.Forums)
+                            {
+                                @if (forum.ForumType == 1 || forum.ForumType == 0)             // daca forumul este privat
+                                {
+                                    <partial name="ForumInfo" model="forum"></partial>
+                                }
+
+                            }
+                        </div>
+                    </div>
                 }
-            </div>
-        </div>
-        <br />
-    }
-}
+            }
+        }
+    </div>
+    
+</div>

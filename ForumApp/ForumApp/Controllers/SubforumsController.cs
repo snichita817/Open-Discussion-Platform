@@ -8,6 +8,8 @@ using static System.Collections.Specialized.BitVector32;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Section = ForumApp.Models.Section;
+using Ganss.Xss;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace ForumApp.Controllers
 {
@@ -35,9 +37,44 @@ namespace ForumApp.Controllers
                 .Where(pos => pos.Id == id)
                 .First();
 
+
             ViewBag.userForumCreator = subforum.Forum.UserId;
             SetAccessRights();
             return View(subforum);
+        }
+
+        [HttpPost]
+        public IActionResult Show([FromForm] Post post)
+        {
+            var sanitizer = new HtmlSanitizer();
+
+            Subforum s = db.Subforums.Find(post.SubforumId);
+            Forum f = db.Forums.Find(s.ForumId);
+            Section sec = db.Sections.Find(f.SectionId);
+            if (s == null || f == null || sec == null)
+            {
+                return HttpNotFound();
+            }
+
+            post.UserId = _userManager.GetUserId(User);
+            post.UserName = _userManager.GetUserName(User);
+            post.PostDate = DateTime.Now;
+            post.Id = 0;
+            if (ModelState.IsValid)
+            {
+                post.PostContent = sanitizer.Sanitize(post.PostContent);
+                post.PostTitle = sanitizer.Sanitize(post.PostTitle);
+
+                db.Posts.Add(post);
+                s.MsgCount++;
+                f.MsgCount++;
+                db.SaveChanges();
+                return RedirectToAction("Show", "Subforums", new { id = post.SubforumId });
+            }
+            else
+            {
+                return Redirect("/Subforums/Show/" + post.SubforumId);
+            }
         }
 
         private void SetAccessRights()
@@ -53,7 +90,7 @@ namespace ForumApp.Controllers
         {
             Subforum subforum = new Subforum();
             Forum f = db.Forums.Find(id);
-            Models.Section s = db.Sections.Find(f.SectionId);
+            //Models.Section s = db.Sections.Find(f.SectionId);
             if (f == null)
             {
                 return HttpNotFound();
@@ -63,8 +100,11 @@ namespace ForumApp.Controllers
                 return HttpNotFound();
             }*/
             subforum.ForumId = id;
+            //ViewBag.sectionId = f.SectionId;
+            //ViewBag.sectionName = s.SectionName;
             ViewBag.forumId = f.Id;
             ViewBag.forumName = f.ForumName;
+            //subforum.SectionId = f.SectionId;
 
 
             subforum.AccessLevel = GetAllCategories();

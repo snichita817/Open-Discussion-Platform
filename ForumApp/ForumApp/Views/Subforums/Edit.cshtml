@@ -1,8 +1,30 @@
 ﻿@model ForumApp.Models.Subforum
 
+
+<style>
+    body {
+        background-color: #fef6ec;
+        font-family: 'Noto Serif', serif;
+        color: #3f3d3d;
+    }
+
+
+    .row .btn {
+        outline-color: black;
+        background-color: #3f3d3d;
+        color: #fef6ec;
+    }
+
+        .row .btn:hover {
+            background-color: #c7c1b9;
+            color: #3f3d3d;
+        }
+</style>
+
+
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Home/">Home</a></li>
         <li class="breadcrumb-item"><a href="/Sections/Index/">Sections</a></li>
         <li class="breadcrumb-item"><a href="/Sections/Show/@ViewBag.sectionId">@ViewBag.sectionName</a></li>
         <li class="breadcrumb-item"><a href="/Forums/Show/@Model.ForumId">@ViewBag.forumName</a></li>
@@ -17,7 +39,7 @@
         <div class="col-6 offset-3">
             @using (Html.BeginForm(method: FormMethod.Post, actionName: "Edit", controllerName: "Subforums"))
             {
-                @Html.Label("SubforumName", "Edit the name of the Subforum")
+                @Html.Label("SubforumName", "Editeaza titlul discutiei")
                 ;
                 <br />
                 @Html.TextBox("SubforumName", @Model.SubforumName, new { @class = "form-control" })
@@ -26,19 +48,23 @@
                 @Html.ValidationMessage("SubforumName", null, new { @class = "text-danger" })
                 ;
                 <br />
-                @Html.Label("SubforumDesc", "Description of the Subforum")
+                @Html.Label("SubforumDesc", "Editeaza descrierea")
                 ;
                 <br />
                 @Html.TextBox("SubforumDesc", @Model.SubforumDesc, new { @class = "form-control" })
                 ;
                 <br />
-                @Html.DropDownListFor(m => m.SubforumType,
-            new SelectList(Model.AccessLevel, "Value", "Text"), "Select access level",
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.DropDownListFor(m => m.SubforumType,
+            new SelectList(Model.AccessLevel, "Value", "Text"), "Cine poate avea acees la acesta discutie",
             new { @class = "form-control" })
+                }
                 <br />
-                <button class="btn btn-sm btn-success" type="submit">Edit</button>
+                <button class="btn btn-sm" type="submit">Editeaza discutia</button>
             }
         </div>
     </div>
+</div>
 
-    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })

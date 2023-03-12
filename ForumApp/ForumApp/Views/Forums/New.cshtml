@@ -1,9 +1,31 @@
 ﻿@model ForumApp.Models.Forum
 @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
+
+<style>
+    body {
+        background-color: #fef6ec;
+        font-family: 'Noto Serif', serif;
+        color: #3f3d3d;
+    }
+
+
+    .row .btn {
+        outline-color: black;
+        background-color: #3f3d3d;
+        color: #fef6ec;
+    }
+
+        .row .btn:hover {
+            background-color: #c7c1b9;
+            color: #3f3d3d;
+        }
+</style>
+
+
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Home/">Home</a></li>
         <li class="breadcrumb-item"><a href="/Sections/Index/">Sections</a></li>
         <li class="breadcrumb-item active" aria-current="page">Create Forum</li>
     </ol>
@@ -16,15 +38,14 @@
         <div class="col-6 offset-3">
             @using (Html.BeginForm(method: FormMethod.Post, actionName: "New", controllerName: "Forums"))
             {
-                <h1>@Model.SectionId</h1>
 @*                <h1>@Model.Section.SectionName</h1>*@
-                @Html.Label("ForumName", "Forum name");
+                @Html.Label("ForumName", "Titlul subiectului de discutie");
                 <br />
                 @Html.TextBox("ForumName", null, new { @class = "form-control" })
                 @Html.ValidationMessage("ForumName", null, new {@class = "text-danger"})
                 <br /><br />
 
-                @Html.Label("ForumDescription", "Enter a description for your forum")
+                @Html.Label("ForumDescription", "O scurta descriere")
                 <br />
                 @Html.TextBox("ForumDescription", null, new { @class = "form-control" })
                 @Html.ValidationMessage("ForumDescription", null, new {@class = "text-danger"})
@@ -36,13 +57,16 @@
                 @Html.ValidationMessage("Section", null, new {@class = "text-danger"})
                 <br />
 
-                <label>Select access level</label>
-                @Html.DropDownListFor(m => m.ForumType,
-                    new SelectList(Model.ForumAccess, "Value", "Text"), "Select access level",
-                    new { @class = "form-control" })
+                @if (User.IsInRole("Admin"))
+                {
+                    <label>Select access level</label>
+                    @Html.DropDownListFor(m => m.ForumType,
+                        new SelectList(Model.ForumAccess, "Value", "Text"), "Cine poate avea acces la acest subiect",
+                        new { @class = "form-control" })
+                }
                 //@Html.ValidationMessage("SectionType", null, new { @class = "text-danger" })
                 <br />
-                <button class="btn btn-sm btn-success" type="submit">Add new forum!</button>
+                <button class="btn btn-sm btn-success" type="submit">Adauga un nou subiect de discutie!</button>
             }
         </div>
     </div>

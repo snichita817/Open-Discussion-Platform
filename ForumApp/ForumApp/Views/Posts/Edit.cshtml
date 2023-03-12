@@ -1,8 +1,30 @@
 ﻿@model ForumApp.Models.Post
 
+
+<style>
+    body {
+        background-color: #fef6ec;
+        font-family: 'Noto Serif', serif;
+        color: #3f3d3d;
+    }
+
+
+    .row .btn {
+        outline-color: black;
+        background-color: #3f3d3d;
+        color: #fef6ec;
+    }
+
+        .row .btn:hover {
+            background-color: #c7c1b9;
+            color: #3f3d3d;
+        }
+</style>
+
+
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="/Home/">Home</a></li>
         <li class="breadcrumb-item"><a href="/Sections/Index/">Sections</a></li>
         <li class="breadcrumb-item"><a href="/Sections/Show/@ViewBag.sectionId">@ViewBag.sectionName</a></li>
         <li class="breadcrumb-item"><a href="/Forums/Show/@ViewBag.ForumId">@ViewBag.forumName</a></li>
@@ -19,25 +41,25 @@
         <div class="col-6 offset-3">
             @using (Html.BeginForm(method: FormMethod.Post, actionName: "Edit", controllerName: "Posts"))
             {
-                @Html.Label("PostTitle", "Edit the tite of the Post")
+                @Html.Label("PostTitle", "Editeaza titlul postarii")
                 ;
                 <br />
-                @Html.TextBox("PostTitle", @Model.PostTitle, new { @class = "form-control" })
+                @Html.TextBox("PostTitle", Model.PostTitle, new { @class = "form-control" })
                 ;
 
                 @Html.ValidationMessage("PostTitle", null, new { @class = "text-danger" })
                 ;
                 <br />
-                @Html.Label("PostContent", "Description of the Subforum")
+                @Html.Label("PostContent", "Textul postarii")
                 ;
                 <br />
-                @Html.TextArea("PostContent", null, new { @class = "summernote" })
+                @Html.TextArea("PostContent", Model.PostContent, new { @class = "form-control summernote" })
                 ;
                 <br />
                 <br />
-                <button class="btn btn-sm btn-success" type="submit">Edit</button>
+                <button class="btn btn-sm" type="submit">Editeaza postarea</button>
             }
         </div>
     </div>
-
+</div>
     @Html.ValidationSummary(false, "", new { @class = "text-danger" })

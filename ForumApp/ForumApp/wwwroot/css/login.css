@@ -1,0 +1,25 @@
+﻿.body {
+    background-color: #262523;
+    background-repeat: no-repeat;
+}
+
+a {
+    color: white;
+}
+
+section {
+    background-color: #F2EAE4;
+}
+
+.btn {
+    outline-color: black;
+    background-color: #3f3d3d;
+    background-color: #c7c1b9;
+    color: #3f3d3d;
+}
+
+.btn:hover {
+    outline-color: black;
+    background-color: #3f3d3d;
+    color: #fef6ec;
+}

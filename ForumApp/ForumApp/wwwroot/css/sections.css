@@ -1,0 +1,54 @@
+﻿body {
+    background-color: #fef6ec;
+    font-family: 'Noto Serif', serif;
+    color: #3f3d3d;
+}
+
+.container-forum {
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+
+
+.forum-grid {
+    display: flex;
+    flex-direction: column;
+    background-color: #fef6ec;
+}
+
+.card {
+    background-color: #fef6ec;
+}
+
+.sectionHeader {
+    background-color: #fef6ec;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+h1, h2, h3, h4, h5{
+    margin: 0;
+}
+
+.sectionHeader > .btn {
+    outline-color: black;
+    background-color: #3f3d3d;
+    color: #fef6ec;
+}
+
+.sectionHeader > .btn:hover {
+    background-color: #c7c1b9;
+    color: #3f3d3d;
+}
+
+.titluSectiune {
+    background-image: linear-gradient(to bottom left, #ab1e20, #3f3d3d);
+    text-align: left;
+    font-size: 25px;
+    border-radius: 6px;
+}
+
+.titluSectiune > a, .titluSectiune > button {
+    padding-left: 5px;
+}
